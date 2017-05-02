@@ -1,0 +1,233 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Productos</title>
+       <f:event type="preRenderView" listener="#{templateValidate.verificar()}"></f:event>
+        
+    </h:head>
+    <h:body style="padding-top: 60px">
+     <h:outputScript library="holder" name="holder.js" />
+        <!--script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.5.2/holder.min.js"></script-->
+             <b:navBar  brandHref="#" inverse="true" fixed="top" fluid="true">
+            <b:image onclick="window.location.href='tpasolution.xhtml'"   tooltip="Hola, #{tiendaBean.hello}" tooltipPosition="right" class="probar" style="width: 15%;margin-left: -15px; height: 50px; cursor: pointer;" value="/resources/img/logo.png"></b:image>
+            
+            <b:navbarLinks pull="right">
+                <b:navLink  id="coment" value="Ver comentarios " icon-awesome="globe" iconAlign="right" href="comentario.xhtml"> <b:badge id="notify" value="#{clienteBean.numero}"
+                                                                                                                                                     tooltip="Tienes #{clienteBean.numero} mensajes por revisar" style="#{clienteBean.style()}" tooltip-position="left"
+/>      </b:navLink>    <b:navLink value="Pedidos en linea" href="pedidos.xhtml"></b:navLink>
+                
+            </b:navbarLinks>
+            <h:form styleClass="navbar-form navbar-right">
+                <div class="form-group">
+                    <b:inputText placeholder="Search..." fieldSize="sm"/>
+                </div>
+            </h:form>
+        </b:navBar>
+        <b:container fluid="true">
+             <b:growl id="growlMsg" globalOnly="true" placementFrom="bottom"
+                    show-detail="true" show-summary="false" allowDismiss="true"
+                    delay="3000" escape="true" /> 
+               <h:form>  <p:poll interval="1"  listener="#{tiendaBean.listpreventas()}" update=":growlMsg"  /> </h:form>
+            <b:row>
+                <b:column col-sm="3" col-md="2" styleClass="sidebar">
+                    <b:listLinks>
+                        <b:navLink  value="Clientes" iconAwesome="user" outcome="cliente.xhtml"></b:navLink>
+                        <b:navLink value="Productos" iconAwesome="apple" outcome="productos_2.xhtml"></b:navLink>
+                            <b:navLink value="Ventas" icon-awesome="usd" outcome="venta.xhtml"></b:navLink>
+                            <b:navLink value="Proveedor" icon-awesome="shopping-cart" href="#"></b:navLink>
+                         
+                          
+                            <h:form>
+                                <b:commandButton  look="link" value="Cerrar sesion" actionListener="#{tiendaBean.cerrarsesion()}" action="/index?faces-redirect=true"></b:commandButton>
+                            </h:form>
+                    </b:listLinks>
+                 
+                </b:column>
+                <b:column col-sm="9" offset-sm="3" col-md="10" offset="2" styleClass="main">
+                    <h2><strong>Productos</strong></h2>
+                    <hr/>
+                    <b:row styleClass="placeholders">
+                         <style>
+                    .prueba:hover{
+                       border-width: 3px;
+                    }
+                </style>
+                       
+                            <b:panel   title="Catalogo de productos #{tiendaBean.hello}" rendered="#{productoBean.catalogo}"  collapsible="false">
+                    <ui:repeat value="#{productoBean.listaproducto}" var="pro" >
+                         <b:column col-xs="6" col-sm="3" styleClass="placeholder">
+                        <h:form>
+                          
+                                <b:panel   class="prueba" title="#{pro.nombre}" look="success" collapsible="false">
+                        
+                                    <b:image style="width: 100px; height: 150px;" value="/resources/img/img_tienda/#{pro.img}"></b:image>
+
+                                    <p>$#{pro.precio} Disponibles <h8 style="color: red">#{pro.cantidad}</h8></p>
+                                    <p><b:commandButton value="Modificar" action="#{productoBean.verproducto(pro.id)}"></b:commandButton> </p>
+                          
+                            
+                                </b:panel> 
+                       
+                        </h:form>
+                         </b:column>
+                    </ui:repeat>
+                           
+                </b:panel>
+                           <b:button value="Registrar producto" outcome="productos_2.xhtml"></b:button>  
+                        <b:column col-md="9" styleClass="placeholder">
+                               <b:panel title="#{productoBean.productomodificar.nombre}" id="dato" rendered="#{productoBean.mostrardetalles}" collapsible="false">
+                    <h:form>
+                        <div style="float: left; width: 20%; ">
+                            <b:image style="width: 100%;" value="/resources/img/img_tienda/#{productoBean.productomodificar.img}"></b:image>
+                        </div>
+                        <div style="width: 60%; float: right;margin-right: 5%;">
+                            <b:panel look="danger" title="Descripción"   style="border: none;" collapsible="false">
+                                <div id="lblnombre">
+                                    <b:label   text="Nombre: #{productoBean.productomodificar.nombre}"></b:label>
+                                </div>
+                                <p></p>
+                                <div id="txtnombre">
+                                    <b:inputText style="width: 40%;"  value="#{productoBean.productomodificar.nombre}" large-screen="full-width" placeholder="Nombre">
+                                        <f:facet name="prepend" >
+                                            <b:iconAwesome name="edit"></b:iconAwesome>
+                                        </f:facet>
+                                    </b:inputText>
+                                </div>
+                                <p></p>
+                                <div  id="lblcantidad">
+                                    <b:label  text="Cantidad: #{productoBean.productomodificar.cantidad}"></b:label>
+                                </div>
+                                <p></p>
+                                <div id="txtcantidad">
+                                    <b:inputText style="width: 40%;"  value="#{productoBean.productomodificar.cantidad}" large-screen="full-width" placeholder="Nombre">
+                                        <f:facet name="prepend" >
+                                            <b:iconAwesome name="edit"></b:iconAwesome>
+                                        </f:facet>
+                                    </b:inputText>
+                                </div>
+                                <div id="btnactualizar">
+                                    <p><b:button style="margin-left: 47px;"  value="Actualizar" iconAwesome="refresh" onclick="$('.modalactualizarproducto').modal();return false;" size="md"></b:button> </p>
+                                </div>
+                            </b:panel>
+                        </div>
+                        <b:modal id="amodal" title="#{tiendaBean.hello}" styleClass="modalactualizarproducto" backdrop="false">
+                            <center> <b:image value="https://userscontent2.emaze.com/images/26a5e505-30d9-4e65-aafe-1e6943cb2c0b/9dfd4e2547adb3530209ae02a0623a44.png"></b:image>
+                                <p>¿Está seguro?</p></center>
+                                
+                                <f:facet name="footer">
+                                    <b:button look="danger" value="Cancelar" dismiss="modal" onclick="return false;"/>
+                                    <b:commandButton value="Modificar" iconAwesome="refresh" actionListener="#{productoBean.modificar()}"></b:commandButton>
+                                </f:facet>
+                        </b:modal>
+                    </h:form>
+                    
+                </b:panel>
+                <h:form>
+                    <b:commandButton rendered="#{productoBean.mostrardetalles}" value="Atras" actionListener="#{productoBean.mostrarcatalogo()}"></b:commandButton>
+                </h:form>
+                      
+                        </b:column>
+                       
+                          <script>
+                   $(document).ready(function(){
+                       $("#txtnombre").hide();
+                        $("#txtcantidad").hide();
+                        $("#btnactualizar").hide();
+                        $("#lblnombre").mouseover(function (){
+                            $("#txtnombre").fadeIn(2000);
+                            $("#txtcantidad").hide();
+                            $("#btnactualizar").fadeIn(2000);
+                        });
+                         $("#lblcantidad").mouseover(function (){
+                            $("#txtcantidad").fadeIn(2000);
+                            $("#txtnombre").hide();
+                            $("#btnactualizar").fadeIn(2000);
+                        });
+                       
+                   });
+                       
+                    
+                </script>
+                    </b:row>
+                   
+                    <b:row styleClass="table-responsive">
+           
+                    </b:row>
+                </b:column>
+            </b:row>
+        </b:container> 
+        <style type="text/css">
+        .sub-header {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .navbar-fixed-top {
+            border: 0 none;
+        }
+        .sidebar {
+            display: none;
+        }
+        @media (min-width: 768px) {
+        .sidebar {
+            background-color: #f5f5f5;
+            border-right: 1px solid #eee;
+            bottom: 0;
+            display: block;
+            left: 0;
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding: 20px;
+            position: fixed;
+            top: 51px;
+            z-index: 1000;
+        }
+        }
+        .nav-list {
+            margin-bottom: 20px;
+            margin-left: -20px;
+            margin-right: -21px;
+        }
+        .nav-list > li > a {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .nav-list > .active > a, .nav-sidebar > .active > a:hover, .nav-sidebar > .active > a:focus {
+            background-color: #428bca;
+            color: #fff;
+        }
+        .main {
+            padding: 20px;
+        }
+        @media (min-width: 768px) {
+        .main {
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+        }
+        .main .page-header {
+            margin-top: 0;
+        }
+        .placeholders {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .placeholders h4 {
+            margin-bottom: 0;
+        }
+        .placeholder {
+            margin-bottom: 20px;
+        }
+        .placeholder img {
+            border-radius: 50%;
+            display: inline-block;
+        }
+        </style>
+    </h:body>
+</html>
+

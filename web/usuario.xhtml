@@ -1,0 +1,391 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:p="http://primefaces.org/ui">
+   
+    <h:head>     
+        <meta name="author" content="Riccardo Massera"></meta>
+          <title>Usuario</title>
+        <f:event type="preRenderView" listener="#{templateValidate.verificarcliente()}"></f:event>
+      
+          
+    </h:head>
+    <h:body style="padding-top: 60px">
+
+        
+        
+        <h:outputScript library="holder" name="holder.js" />
+        <!--script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.5.2/holder.min.js"></script-->
+               <b:navBar  brandHref="#" inverse="true" fixed="top" fluid="true">
+                   <b:image onclick="window.location.href='tpasolution.xhtml'"   tooltip="Hola, #{usuarioBean.cliente.nombre}" tooltipPosition="right" class="probar" style="width: 15%;margin-left: -15px; height: 50px; cursor: pointer;" value="/resources/img/logo.png"></b:image>
+       
+                <b:navbarLinks pull="right" style="margin-top: -10px;">
+     <h:panelGrid style="float: right" columns="2"> 
+         
+         <b:navbarLinks pull="right"><b:navLink value="    " href="#"><b:image style="width: 40px ;height: 40px ; border-radius: 50%;" value="/resources/img/img_cliente/#{usuarioBean.cliente.img}" ></b:image></b:navLink></b:navbarLinks>
+   
+     <b:navbarLinks pull="right" styleClass="hidden-xs">
+       
+
+    <b:dropMenu value="#{usuarioBean.cliente.nombre} #{usuarioBean.cliente.apellido}">
+       
+       <h:form>
+           <b:navCommandLink iconAwesome="remove" value="Salir" actionListener="#{usuarioBean.cerrarsesion()}" action="/index?faces-redirect=true"></b:navCommandLink>
+       </h:form> 
+    </b:dropMenu>
+           
+     </b:navbarLinks>
+     </h:panelGrid>
+     </b:navbarLinks>
+          
+            <h:form styleClass="navbar-form navbar-right">
+                <div class="form-group">
+                    <b:inputText placeholder="Search..." fieldSize="sm"/>
+                </div>
+            </h:form>
+        </b:navBar>
+        
+        <b:container fluid="true">
+            <b:row>
+                <b:column col-sm="3" col-md="2" styleClass="sidebar">
+                    <b:listLinks>
+                        <b:navLink header="Menú rapido" />
+                          <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+                        <b:navLink href="#info" value="Inicio" />
+                        <b:navLink class="prueba" href="#report" value="Reportes" />
+                        <b:navLink href="#" value="Recientes" />
+                        <b:navLink href="#" value="Cerrar sesion" />
+                    </b:listLinks>
+                 
+                </b:column>
+                <script>
+                    $(document).ready(function(){
+                       $(".prueba").click(function(){
+                          $(".information").show(); 
+                       });
+                    });
+                    
+                </script>
+                <b:column col-sm="9" offset-sm="3" col-md="10" offset="2" styleClass="main">
+                    <b:growl id="growlMsg" globalOnly="true" placementFrom="bottom"
+                    show-detail="true" show-summary="false" allowDismiss="true"
+                    delay="1000" escape="true" /> 
+              <b:modal rendered="#{usuarioBean.panel}" id="completainfo"  styleClass="modalactualizarproducto" backdrop="false" closable="false" close-on-escape="false" >
+                <b:panel rendered="#{usuarioBean.panel}" style=" border: none;" title="Completa tu información!" look="info" collapsible="false">
+                    <div style="width: 300px; float: left">
+                        <b:panelGrid columns="1">
+                            <h:form>
+                                <b:inputText id="username" placeholder="Usuario" value="#{usuarioBean.clientedatos.usuario}" >
+                                            <f:facet name="prepend" >
+                                                <b:iconAwesome name="user"></b:iconAwesome>
+                                            </f:facet>
+                                        </b:inputText>
+                                <b:inputText id="password" placeholder="Contraseña" type="password" value="#{usuarioBean.clientedatos.contrasena}">
+                                            <f:facet name="prepend" >
+                                                <b:iconAwesome name="key">
+
+                                                </b:iconAwesome>
+                                            </f:facet>
+                                </b:inputText>
+                                <b:commandButton look="info" value="Guardar" actionListener="#{usuarioBean.actualizardatos()}"></b:commandButton>
+                            </h:form>
+                        </b:panelGrid>
+                    </div>
+                    <div style=" float: right">
+                        <b:image style="height: 100px;" value="http://icon-icons.com/icons2/20/PNG/256/business_man_user_alert_alerttheuser_askthecustomer_negocio_2331.png" tooltip="Completa información"></b:image>
+                        
+                    </div>
+                </b:panel> 
+                                <f:facet name="footer">
+                                    <strong>Una vez confirmes datos, procederás a ingresar al portal con tus datos.</strong>
+                     
+                                </f:facet>
+               </b:modal>
+                
+   <b:container style="width: 100%;" rendered="#{usuarioBean.perfil}">      
+       
+       
+       
+        <div style="width: 100%; background: #ffffff;border-radius: 5px;">
+            <b:column col-md="13">      
+            <div style="width: 100%;height: 200px; background-image:url('#{resource['/img/header.jpg']}');background-size: 110%; border-radius: 10px;">
+                   
+                      <div style="margin-left: 41%; width: 20%;">
+                    
+                       <b:image style="height: 130px; border-radius: 800px; margin-left: 5%; width: 60%; padding: 10px;" value="/resources/img/img_cliente/#{usuarioBean.cliente.img}" tooltip="Foto de perfil"></b:image>
+                            
+                 
+                       <strong> <p style="color: white;">#{usuarioBean.cliente.nombre} #{usuarioBean.cliente.apellido}</p></strong>
+                      
+                            
+                    </div>
+                      <p style="float: right;"> <b:label style="color: white;" text="#{usuarioBean.valorcredito} $"></b:label> </p>
+                  </div>
+        </b:column>
+            <b:tabView>
+                <b:tab title="Catalogo en linea" id="catalogolinea">
+                    <b:tabView>
+                        <b:tab title="Catalogo" id="catalogo">
+                            
+                                <c:forEach items="#{usuarioBean.listaproducto}" var="producto">
+                                    <h:form>
+                                        <b:column col-md="2">
+                                       
+                                            <b:image style="width: 40%;height: 80px;border-radius: 60px;"  value="/resources/img/img_tienda/#{producto.img}"></b:image>
+                                            <p>#{producto.nombre}</p>
+                                            <p style="color: red">$#{producto.precio}</p>
+                                            <p><input type="number" style="width: 20%; border-radius: 20px;border:0px; overflow: hidden;" jsf:value="#{usuarioBean.cantidad}" /></p>
+                                            <b:label rendered="#{producto.cantidad == 0 eq true}" text="AGOTADO"></b:label><p></p>
+                                            <b:label rendered="#{producto.cantidad == 0 eq false}" style="color: red;" text="Disponibles #{producto.cantidad}"></b:label><p></p>
+                                            <p><b:commandButton look="info"  rendered="#{producto.cantidad == 0 eq false}" value="añadir al carrito" disabled="#{producto.cantidad == 0 eq true}" iconAwesome="shopping-cart"    actionListener="#{usuarioBean.añadiralcarrrito(producto.id)}" /></p>
+                                                   
+                                           
+                                        </b:column>
+                                    </h:form>
+                                </c:forEach>
+                            
+                        </b:tab>
+                        <b:tab title="Ver recientes..">
+                             
+                            <c:forEach items="#{usuarioBean.listarreciente}" var="productorecientes">
+                                    <h:form>
+                                        <b:column col-md="2">
+                                            <b:image  style="width: 40%;height: 80px;border-radius: 60px;"  value="/resources/img/img_tienda/#{productorecientes.img}"></b:image>
+                                            <p>#{productorecientes.nombre}</p>
+                                            <p style="color: red">$#{productorecientes.precio}</p>
+                                            <p><input type="number" style="width: 20%; border-radius: 20px;border:0px; overflow: hidden;" jsf:value="#{usuarioBean.cantidad}" /></p>
+                                            <p>  <b:label rendered="#{productorecientes.cantidad == 0 eq true}" text="AGOTADO"></b:label></p>
+                                             <p><b:commandButton rendered="#{productorecientes.cantidad == 0 eq false}" disabled="#{productorecientes.cantidad == 0 eq true}" look="info"  value="añadir al carrito" iconAwesome="shopping-cart"   actionListener="#{usuarioBean.añadiralcarrrito(productorecientes.id)}" /></p>
+                                                   
+                                        </b:column>
+                                      
+                                    </h:form>
+                                </c:forEach>
+                        </b:tab>
+                        <b:tab id="carrito" style="color: red" title="#{usuarioBean.notifycar}" tooltip="En carrito..." rendered="#{usuarioBean.botonescarrito}">
+                            <h:form>
+                                <b:panel collapsible="false" title="Tu pedido" >
+                                    <ui:repeat value="#{usuarioBean.detallepreventa}" var="detalle">
+                                        <b:image style="width: 10%;" value="/resources/img/img_tienda/#{detalle.producto.img}"></b:image>
+                                            #{detalle.producto.nombre}
+                                            
+                                        <p>Cantidad: #{detalle.cantidad}</p>
+                                        <p>Subtotal: #{detalle.subtotal}</p>
+                                            
+                                    </ui:repeat>
+                                  
+                                </b:panel>
+                                   <b:button style="width: 12%;" rendered="#{usuarioBean.botonescarrito}" value="Confirmar pedido" look="success" onclick="$('.modalconfirmar2').modal();return false;" size="md"/><h:outputText value="&#160;" />
+                                    <b:button style="width: 12%;" rendered="#{usuarioBean.botonescarrito}" value="Cancelar pedido" look="danger" onclick="$('.modalconfirmar3').modal();return false;" size="md"/>
+                                    <b:modal  id="amodal1" title="Confirmar pedido" styleClass="modalconfirmar2" backdrop="false">
+                                        <b:selectOneMenu value="#{usuarioBean.tipopreventa}"  id="brandID" >
+                                                
+                                            <f:selectItem itemLabel="Efectivo" itemValue="efectivo"/>
+                                            <f:selectItem itemLabel="Crédito" itemValue="credito"/>
+                                            
+                                         
+                                            </b:selectOneMenu>
+                                        
+                                                <p>¿Está seguro?</p>
+                                            <f:facet name="footer">
+                                                <b:button value="Cancelar" dismiss="modal" onclick="return false;"/>
+                                              <b:commandButton value="Confirmar pedido" look="info" iconAwesome="ok" actionListener="#{usuarioBean.confirmarpedido()}" ></b:commandButton>
+                                            </f:facet>
+                                    </b:modal> 
+                                    <b:modal  id="amodal2" title="Cancelar pedido" styleClass="modalconfirmar3" backdrop="false">
+                                            <p>¿Está seguro?</p>
+                                            <f:facet name="footer">
+                                                <b:button value="Cancelar" dismiss="modal" onclick="return false;"/>
+                                                 <b:commandButton value="Cancelar pedido" look="danger" iconAwesome="remove" action="#{usuarioBean.cancelarpedido()}" ></b:commandButton>
+                                            </f:facet>
+                                    </b:modal> 
+                            </h:form>
+                            <b:label style="color: red; width: 20%;" text="Total: #{usuarioBean.total}"></b:label>
+                        </b:tab>
+                        
+                        <b:tab  title="Historial de compras">
+                            <div id="report">
+                            <div style="float: left">
+                            <c:forEach items="#{usuarioBean.listadefactura}" var="fac">
+                               
+                                <h:form>
+                                #{fac.fecha}
+                                <p>#{fac.tipo}</p>
+                                
+                                    <h:commandLink target="_blank" value="Ver factura" actionListener="#{usuarioBean.verReporte(fac.id)}"></h:commandLink>
+                                </h:form>
+                            </c:forEach>
+                            </div>
+                            <div style="float: right">
+                                <b:image value="http://www.iconarchive.com/download/i6223/custom-icon-design/pretty-office-6/custom-reports.ico"></b:image>
+                            </div>
+                             </div>
+                        </b:tab>
+                       
+                    </b:tabView>
+                </b:tab>
+                <b:tab class="information" id="info" title="información">
+                  
+                </b:tab>
+                <b:tab title="comentario">
+                    <b:panel style="margin-left:10px; margin-right: 10px;" rendered="#{usuarioBean.panelexito}" collapsible="false" title="envianos tu comentario">
+                        <h:form>
+                            <b:inputTextarea placeholder="Escriba su comentario..." value="#{usuarioBean.comentario.texto}"/>
+                            <b:commandButton look="info" value="Enviar comentario" iconAwesome="thumbs-up" actionListener="#{usuarioBean.enviarcomentario()}"></b:commandButton>
+                        </h:form>
+                    </b:panel>
+                </b:tab>
+                <b:tab  title="Mis configuraciones">
+           <b:panel  title="Cambiar configuración" collapsible="false">
+                   
+                         <div style="width:400px; float: left; margin-left: 70px;" id="prueba">
+                      
+                         <b:row>
+                            <h:form enctype="multipart/form-data">
+                            
+                                <b:inputText value="#{usuarioBean.cliente.nombre}" large-screen="full-width" placeholder="Nombre">
+                                    <f:facet name="prepend" >
+                                        <b:iconAwesome name="user"></b:iconAwesome>
+                                    </f:facet>
+                                </b:inputText>
+                                
+                                <b:inputText value="#{usuarioBean.cliente.apellido}" large-screen="full-width" placeholder="Nombre">
+                                    <f:facet name="prepend" >
+                                        <b:iconAwesome name="user"></b:iconAwesome>
+                                    </f:facet>
+                                </b:inputText>
+                                <b:inputText value="#{usuarioBean.cliente.usuario}" large-screen="full-width" placeholder="Nombre">
+                                    <f:facet name="prepend" >
+                                        <b:iconAwesome name="user"></b:iconAwesome>
+                                    </f:facet>
+                                </b:inputText>
+                                <b:inputText value="#{usuarioBean.cliente.contrasena}" large-screen="full-width" placeholder="Nombre">
+                                    <f:facet name="prepend" >
+                                        <b:iconAwesome name="user"></b:iconAwesome>
+                                    </f:facet>
+                                </b:inputText>
+                                <b:inputText value="#{usuarioBean.cliente.correo}" large-screen="full-width" placeholder="Nombre">
+                                    <f:facet name="prepend" >
+                                        <b:iconAwesome name="user"></b:iconAwesome>
+                                    </f:facet>
+                                </b:inputText>
+                                <b:inputText value="#{usuarioBean.cliente.direccion}" large-screen="full-width" placeholder="Nombre">
+                                    <f:facet name="prepend" >
+                                        <b:iconAwesome name="user"></b:iconAwesome>
+                                    </f:facet>
+                                </b:inputText>
+                                <b:inputText value="#{usuarioBean.cliente.telefono}" large-screen="full-width" placeholder="Nombre">
+                                    <f:facet name="prepend" >
+                                        <b:iconAwesome name="user"></b:iconAwesome>
+                                    </f:facet>
+                                </b:inputText>
+                              <b:panel> 
+                                  <p:fileUpload value="#{usuarioBean.img}" mode="simple" />
+                            </b:panel>
+                                <b:commandButton look="info" iconAwesome="refresh" value="Actualiza tus datos" onclick="$('.loader').show()" actionListener="#{usuarioBean.modificardatos()}"></b:commandButton>
+                             
+                            </h:form>
+                        </b:row>
+                     </div>
+                      <div style="width: 200px; float: right; margin-right: 50px;">
+                          <b:image style="width: 200px; margin-right: 20px;"  value="/resources/img/img_cliente/#{usuarioBean.cliente.img}"  />
+                           
+                      </div>
+                
+                </b:panel>
+                </b:tab>
+            </b:tabView>
+        </div>
+        
+     
+       
+    </b:container>
+        
+            <script>
+                $(document).ready(function(){
+                   $("#completainfo").modal();
+                    
+                });
+            </script>
+                   
+                </b:column>
+            </b:row>
+        </b:container> 
+        <style type="text/css">
+        .sub-header {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .navbar-fixed-top {
+            border: 0 none;
+        }
+        .sidebar {
+            display: none;
+        }
+        @media (min-width: 768px) {
+        .sidebar {
+            background-color: #f5f5f5;
+            border-right: 1px solid #eee;
+            bottom: 0;
+            display: block;
+            left: 0;
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding: 20px;
+            position: fixed;
+            top: 51px;
+            z-index: 1000;
+        }
+        }
+        .nav-list {
+            margin-bottom: 20px;
+            margin-left: -20px;
+            margin-right: -21px;
+        }
+        .nav-list > li > a {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .nav-list > .active > a, .nav-sidebar > .active > a:hover, .nav-sidebar > .active > a:focus {
+            background-color: #428bca;
+            color: #fff;
+        }
+        .main {
+            padding: 20px;
+        }
+        @media (min-width: 768px) {
+        .main {
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+        }
+        .main .page-header {
+            margin-top: 0;
+        }
+        .placeholders {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .placeholders h4 {
+            margin-bottom: 0;
+        }
+        .placeholder {
+            margin-bottom: 20px;
+        }
+        .placeholder img {
+            border-radius: 50%;
+            display: inline-block;
+        }
+        </style>
+        
+   
+        
+    </h:body>
+</html>
+
