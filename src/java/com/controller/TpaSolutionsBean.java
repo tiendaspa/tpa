@@ -26,9 +26,14 @@ import twitter4j.conf.ConfigurationBuilder;
 public class TpaSolutionsBean {
     private List<Status> listatuit = new ArrayList<>();
     private double ingreso;
-    
+    private boolean mostrarmapatiendas = false;
+    private boolean mostrarjumbo = true;
     public TpaSolutionsBean() throws TwitterException {
     
+    }
+    public void mostrarmapa(){
+        setMostrarmapatiendas(true);
+        setMostrarjumbo(false);
     }
     
   
@@ -40,5 +45,26 @@ public class TpaSolutionsBean {
     public void setListatuit(List<Status> listatuit) {
         this.listatuit = listatuit;
     }
+
+
+ 
+
+    public boolean isMostrarmapatiendas() {
+        return mostrarmapatiendas;
+    }
+
+    public void setMostrarmapatiendas(boolean mostrarmapatiendas) {
+        this.mostrarmapatiendas = mostrarmapatiendas;
+    }
+
+    public boolean isMostrarjumbo() {
+        return mostrarjumbo;
+    }
+
+    public void setMostrarjumbo(boolean mostrarjumbo) {
+        this.mostrarjumbo = mostrarjumbo;
+    }
+
+ 
     
 }

@@ -64,6 +64,7 @@ public class ClienteBean implements Serializable{
     private boolean mostrardetalle_catalogo = false;
     private Cliente Clienteregistrar = new Cliente();
     private boolean clienteregistrado =false;
+
     public TiendaBean getTb() {
         return tb;
     }
@@ -76,6 +77,7 @@ public class ClienteBean implements Serializable{
      listarcomentarios();
   
     }
+    
   
     
     public static void send(String to, String sub,String msg) 
@@ -152,6 +154,9 @@ public class ClienteBean implements Serializable{
         setClienteregistrar(new Cliente());
        
      
+    }
+    public void ocultarpanel(){
+        setClienteregistrado(false);
     }
     
        public void notificarPUSH() {
@@ -392,6 +397,7 @@ public class ClienteBean implements Serializable{
         this.clienteregistrado = clienteregistrado;
     }
 
+ 
   
    
     

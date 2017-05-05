@@ -38,6 +38,7 @@ public class Tienda implements Serializable {
     private String contrasena;
      @Column(name = "telefono", length = 50,nullable = false)
     private String telefono;
+    private boolean estado;
 
     public Tienda(Long idtienda, String nombretienda, String direccion, String propietario, String cedulapropietario, String usuario, String contrasena, String telefono) {
         this.idtienda = idtienda;
@@ -152,6 +153,14 @@ public class Tienda implements Serializable {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
   

@@ -10,6 +10,7 @@ import com.dao.ImplDao;
 import com.entity.Cliente;
 import com.entity.Noticia;
 import com.entity.Tienda;
+import com.entity.Ubicaciongps;
 import com.implDao.ITienda;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -103,6 +104,52 @@ public class TiendaServices extends ImplDao<Tienda , Long> implements ITienda,Se
             getEntityManagger().close();
         }
        
+    }
+
+    @Override
+    public Ubicaciongps obtenerubicacion(Tienda ti) {
+        Ubicaciongps ubicacion = null;
+        List<Ubicaciongps> listaubicacion = new ArrayList<>();
+         String consulta;
+     
+        try {
+            consulta = "FROM Ubicaciongps i WHERE i.tienda =?1";
+            Query query = getEmf().createEntityManager().createQuery(consulta);
+            query.setParameter(1, ti);
+            listaubicacion = query.getResultList();
+            
+            if(!listaubicacion.isEmpty()){
+                ubicacion = listaubicacion.get(0);
+            }
+         
+        } catch (Exception e) {
+            throw  e;
+        }finally{
+            getEntityManagger().close();
+        }
+        return ubicacion;
+    }
+
+    @Override
+    public Tienda validar(Tienda c) {
+       Tienda tienda = null;
+        String consulta;
+        try {
+            consulta = "FROM Tienda t WHERE t.usuario = ?1 or t.nombretienda = ?2";
+            Query query = getEmf().createEntityManager().createQuery(consulta);
+            query.setParameter(1, c.getUsuario());
+            query.setParameter(2, c.getNombretienda());
+            List<Tienda> lista =query.getResultList();
+            
+            if(!lista.isEmpty()){
+                tienda = lista.get(0);
+            }
+        } catch (Exception e) {
+            throw  e;
+        }finally{
+            getEntityManagger().close();
+        }
+        return tienda;
     }
 
   

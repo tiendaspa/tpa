@@ -29,7 +29,7 @@ public class TemplateValidate {
             Tienda p= (Tienda) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("tienda");
             Cliente c = (Cliente) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("cliente");
             if(p == null){
-                FacesContext.getCurrentInstance().getExternalContext().redirect("./../invalidate.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("./../faces/index.xhtml");
             }
           
         } catch (Exception e) {
@@ -42,7 +42,7 @@ public class TemplateValidate {
         
             Cliente c = (Cliente) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("cliente");
             if(c == null){
-                FacesContext.getCurrentInstance().getExternalContext().redirect("./../invalidate.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("./../faces/index.xhtml");
             }
           
         } catch (Exception e) {

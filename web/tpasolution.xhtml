@@ -13,7 +13,8 @@
          <f:event type="preRenderView" listener="#{templateValidate.verificar()}"></f:event>
          <f:event id="ingresoss" type="preRenderView" listener="#{tiendaBean.obteneringresos()}"></f:event>
         <f:event type="preRenderView" listener="#{tiendaBean.clientemascomprador}"></f:event>
-      
+        <f:event type="preRenderView" listener="#{ubicaciongpsBean.listarmap()}"></f:event>
+      <script type='text/javascript' src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDdVQdxQ0l624K1pZRatnw6tQQVvkY1HFw'></script>
         <link rel="icon" type="image/png" href="http://www.freeiconspng.com/uploads/supermarket-png-9.png" />
        
     </h:head>
@@ -26,7 +27,7 @@
                 <b:navLink  id="coment" value="Comentarios"  icon-awesome="comment" iconAlign="left" href="comentario.xhtml"> <b:badge id="notify" value="#{clienteBean.numero}"
                                                                                                                                                      tooltip="Tienes #{clienteBean.numero} mensajes por revisar" style="#{clienteBean.style()}" tooltip-position="left"
 />      </b:navLink>    
-                <b:navLink value="Pedidos" icon-awesome="shopping-cart"  href="pedidos.xhtml"> <b:badge style="background-color: red;" value="#{tiendaBean.listapre.size()}"></b:badge></b:navLink>
+                <b:navLink  id="bagdepedido" value="Pedidos" icon-awesome="shopping-cart"  href="pedidos.xhtml"> <b:badge  style="background-color: red;" value="#{tiendaBean.listapre.size()}"></b:badge></b:navLink>
                 
             </b:navbarLinks>
             <h:form styleClass="navbar-form navbar-right">
@@ -36,17 +37,18 @@
             </h:form>
         </b:navBar>
         <b:container fluid="true">
-             <b:growl id="growlMsg" globalOnly="true" placementFrom="bottom"
-                    show-detail="true" show-summary="false" allowDismiss="true"
-                    delay="3000" escape="true" /> 
-             <h:form><p:poll interval="2" listener="#{tiendaBean.listpreventas()}" update=":growlMsg"></p:poll></h:form>
+            <b:growl id="growlMsg" globalOnly="true" placementFrom="bottom" placementAlign="left"
+        show-detail="true" show-summary="false" allowDismiss="true"
+        escape="true"  icon="globe" delay="20000" style="background: transparent; " /> 
+             <h:form><p:poll   async="true"  interval="2" listener="#{tiendaBean.listpreventas()}" update=":growlMsg"></p:poll>
+          </h:form>
              <b:row>
                 <b:column col-sm="3" col-md="2" styleClass="sidebar">
                     <b:listLinks>
                         <b:navLink  value="Clientes" iconAwesome="user" outcome="cliente.xhtml"></b:navLink>
                         <b:navLink value="Productos" iconAwesome="apple" outcome="productos_2.xhtml"></b:navLink>
-                            <b:navLink value="Ventas" icon-awesome="usd" outcome="venta.xhtml"></b:navLink>
-                            <b:navLink value="Proveedor" icon-awesome="shopping-cart" href="#"></b:navLink>
+                        <b:navLink value="Ventas" icon-awesome="usd" outcome="venta.xhtml"></b:navLink>
+                        <b:navLink value="Proveedor" icon-awesome="shopping-cart" href="#"></b:navLink>
                          
                           
                             <h:form>
@@ -56,14 +58,17 @@
                  
                 </b:column>
                 <b:column col-sm="9" offset-sm="3" col-md="10" offset="2" styleClass="main">
-                    <b:jumbotron class="jumbotronindex">
+                    <b:jumbotron class="jumbotronindex" rendered="#{tpaSolutionsBean.mostrarjumbo}">
             <b:container>
                
                 <b:column col-md="4">
                      <h3>Hola, #{tiendaBean.hello} bienvenido!</h3>
                      Portal web que tomará el control con aquellos clientes que intenten robarte un credito, dile stop!<p></p>
-                  
-                     <b:button look="primary" value="Ver noticias" icon="search" onclick="$('.jumbotronindex').fadeOut(1000)"></b:button><p></p> <b:button icon="certificate" look="danger" value="Promocionar producto" onclick="$('.mdlproducto').modal(); return false;" tooltip="Promociona tu producto y compite con tiendas!"></b:button>
+                     <h:form id="frmabrir">
+                         <b:commandButton look="primary" value="Ver mapa" icon="globe" actionListener="#{tpaSolutionsBean.mostrarmapa()}"/>
+                     
+                         <b:switch  onText="Abrir" offText="Cerrar" onchange="ajax:tiendaBean.openstore()" update="@form" value="large-screen='full-width'" large-screen="full-width" />
+                     </h:form><p></p> <b:button icon="certificate" look="danger" value="Promocionar producto" onclick="$('.mdlproducto').modal(); return false;" tooltip="Promociona tu producto y compite con tiendas!"></b:button>
                      
                      <b:modal  closable="false" id="mdlproduct" styleClass="mdlproducto" backdrop="false" close-on-escape="false">
                          <h:form id="f"> <h4>Selecciona producto</h4>
@@ -99,12 +104,33 @@
                 
                 </b:column>
                 <b:column col-md="4">
-                   <b:image style="height: 250px; margin-left: 450px;" value="http://icon-icons.com/icons2/403/PNG/512/shop_40505.png"></b:image>
+                   <b:image style="height: 250px; margin-left: 350px;" value="http://icon-icons.com/icons2/403/PNG/512/shop_40505.png"></b:image>
                    <strong style="margin-left: 70px; float: right;">   Ingresos en linea : #{tiendaBean.ingresos}</strong>
                 </b:column>
+                
+                
             </b:container>
 
         </b:jumbotron>
+                  
+                    <b:container rendered="#{tpaSolutionsBean.mostrarmapatiendas}" id="gmapcontainer">
+                     
+                    <h:form>  
+            <p:gmap id="gmap" center="10.3787604,-75.4799184" zoom="16" type="ROADMAP" model="#{ubicaciongpsBean.advancedModel}" style="width:100%;height:400px">
+ 
+        <p:ajax event="overlaySelect" listener="#{ubicaciongpsBean.onMarkerSelect}" />
+ 
+        <p:gmapInfoWindow id="infoWindow">
+            <p:outputPanel style="text-align: center; display: block; margin: auto">
+                <p:graphicImage name="https://www.primefaces.org/showcase/javax.faces.resource/demo/images/antalya/#{ubicaciongpsBean.marker.data}" height="150" />
+                    <br/>
+                    <h:outputText value="#{ubicaciongpsBean.marker.title}" />
+            </p:outputPanel>
+        </p:gmapInfoWindow>
+    </p:gmap>
+</h:form>
+                </b:container>
+                   
            
                  
         <b:container>
@@ -185,7 +211,7 @@
                     </b:row>
                    
                     <hr/>
-                   
+                
                  
                 </b:column>
             </b:row>

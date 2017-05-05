@@ -72,7 +72,8 @@
                         <b:tab title="Registrar Cliente ">
                             
                             <b:panel title="Agregar nuevo cliente" collapsible="false"> 
-                                <b:alert closable="true" rendered="#{clienteBean.clienteregistrado}" severity="success"><strong>Registro exitoso!</strong> Ahora cuentas con un nuevo cliente.</b:alert>
+                                <b:alert class="panelregistroexitoso"  closable="true" rendered="#{clienteBean.clienteregistrado}" severity="success"><strong>Registro exitoso!</strong> Ahora cuentas con un nuevo cliente. </b:alert>
+                                <b:button value="Ok" look="primary" onclick="ajax:clienteBean.ocultarpanel()"  ></b:button>
                                 <div style="width:50%; float: left; margin-left: 70px;" id="prueba">
                                     <b:row>
                                         <b:inputText value="#{clienteBean.clienteregistrar.nombre}" large-screen="full-width" placeholder="Nombre" >
@@ -207,12 +208,14 @@
         </b:container> 
           <script>
            $('.botonblock').click(function(){
-               $.blockUI.defaults.overlayCSS.opacity=.5;
-  $.blockUI.defaults.message='<h1><b:spinner name="cog" size="1x" /></h1>';
-
-  $.blockUI({ css: { backgroundColor: 'transparent', color: '#fff', border: 'none'} });
+                $.blockUI.defaults.overlayCSS.opacity=.5;
+                $.blockUI.defaults.message='<h1><b:spinner name="cog" size="1x" /></h1>';
+                $.blockUI({ css: { backgroundColor: 'transparent', color: '#fff', border: 'none'} });
                
            }); 
+           $('.panelregistroexitoso').click(function(){
+        
+           });
   
  
 </script>

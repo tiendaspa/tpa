@@ -125,7 +125,7 @@
                       
                             
                     </div>
-                      <p style="float: right;"> <b:label style="color: white;" text="#{usuarioBean.valorcredito} $"></b:label> </p>
+                <p style="float: right;"> <b:label severity="success" style="color: white;" text="#{usuarioBean.valorcredito} $"></b:label> </p>
                   </div>
         </b:column>
             <b:tabView>
@@ -142,7 +142,7 @@
                                             <p style="color: red">$#{producto.precio}</p>
                                             <p><input type="number" style="width: 20%; border-radius: 20px;border:0px; overflow: hidden;" jsf:value="#{usuarioBean.cantidad}" /></p>
                                             <b:label rendered="#{producto.cantidad == 0 eq true}" text="AGOTADO"></b:label><p></p>
-                                            <b:label rendered="#{producto.cantidad == 0 eq false}" style="color: red;" text="Disponibles #{producto.cantidad}"></b:label><p></p>
+                                            <b:label severity="primary" rendered="#{producto.cantidad == 0 eq false}"  text="Disponibles #{producto.cantidad}"></b:label><p></p>
                                             <p><b:commandButton look="info"  rendered="#{producto.cantidad == 0 eq false}" value="añadir al carrito" disabled="#{producto.cantidad == 0 eq true}" iconAwesome="shopping-cart"    actionListener="#{usuarioBean.añadiralcarrrito(producto.id)}" /></p>
                                                    
                                            
@@ -160,7 +160,7 @@
                                             <p>#{productorecientes.nombre}</p>
                                             <p style="color: red">$#{productorecientes.precio}</p>
                                             <p><input type="number" style="width: 20%; border-radius: 20px;border:0px; overflow: hidden;" jsf:value="#{usuarioBean.cantidad}" /></p>
-                                            <p>  <b:label rendered="#{productorecientes.cantidad == 0 eq true}" text="AGOTADO"></b:label></p>
+                                            <p>  <b:label severity="warning" rendered="#{productorecientes.cantidad == 0 eq true}" text="AGOTADO"></b:label></p>
                                              <p><b:commandButton rendered="#{productorecientes.cantidad == 0 eq false}" disabled="#{productorecientes.cantidad == 0 eq true}" look="info"  value="añadir al carrito" iconAwesome="shopping-cart"   actionListener="#{usuarioBean.añadiralcarrrito(productorecientes.id)}" /></p>
                                                    
                                         </b:column>

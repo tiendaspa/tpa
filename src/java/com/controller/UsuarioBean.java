@@ -120,7 +120,7 @@ public class UsuarioBean {
         FacesContext.getCurrentInstance().responseComplete();               
     }
     public void añadiralcarrrito(Long id){
-   
+        if(obtenerCliente().getTienda().isEstado() == true){
         
         
         setProducto( productoser.verproducto(id));
@@ -161,6 +161,9 @@ public class UsuarioBean {
             }
             setCantidad(0);
             
+        }
+        }else{
+            FacesMessages.error(obtenerCliente().getTienda().getNombretienda() + " No se encuentra disponible en estos momentos.");
         }
     }
  

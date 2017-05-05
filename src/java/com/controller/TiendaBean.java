@@ -15,6 +15,7 @@ import com.entity.Notificacion;
 import com.entity.Preventa;
 import com.entity.Producto;
 import com.entity.Tienda;
+import com.entity.Ubicaciongps;
 import com.services.ClienteServices;
 import com.services.CreditoServices;
 import com.services.DetallepreventaServices;
@@ -24,7 +25,9 @@ import com.services.NotificacionServices;
 import com.services.PreventaServices;
 import com.services.ProductoServices;
 import com.services.TiendaServices;
+import com.services.UbicaciongpsServices;
 import com.services.UsuarioServices;
+import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -37,11 +40,16 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 import javax.swing.JOptionPane;
+import maps.java.Geocoding;
 
 import net.bootsfaces.utils.FacesMessages;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartModel;
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.Marker;
+import static sun.management.Agent.error;
 
 /**
  *
@@ -85,7 +93,14 @@ public class TiendaBean {
     private ArrayList<Noticia> listadonoticias = new ArrayList<>();
     private Producto productopromocionar = new  Producto();
     private boolean mostrarpanelpromocion = false;
-
+    private boolean detenerpoll;
+    private Ubicaciongps ubicaciongps = new Ubicaciongps();
+    private Cliente cli = new Cliente();
+    private Tienda ts = new Tienda();
+    private String latitud =null;
+    private String longuitud =null;
+    private Ubicaciongps ubicaciontienda = new Ubicaciongps();
+    
     public boolean isMostrarpanelpromocion() {
         return mostrarpanelpromocion;
     }
@@ -100,6 +115,25 @@ public class TiendaBean {
         listarnoticias();
 
     }
+    public List<Tienda> listartienda(){
+        ArrayList<Tienda> listatiendaaaa = (ArrayList<Tienda>) tiendaserv.consultarTodo(Tienda.class);
+        return listatiendaaaa;
+    }
+    public void probando(){
+       
+        setTs(tiendaserv.consultar(Tienda.class, getTienda().getIdTienda()));
+        setUbicaciongps(tiendaserv.obtenerubicacion(getTs()));
+        setLatitud(getUbicaciongps().getLatitud());
+        setLonguitud(getUbicaciongps().getLonguitud());
+    
+    }
+    public void openstore(){
+         if(Obtenertienda().isEstado() ==  false){
+             Obtenertienda().setEstado(true);
+             tiendaserv.modificar(Obtenertienda());
+         }
+    }
+    
     
     public static void mostrarprueba(){
         FacesMessages.info("actualizado");
@@ -290,6 +324,16 @@ public class TiendaBean {
        
     }
     
+    public boolean controlpoolling(){
+        boolean ctrl  = false;
+        long id = notificacionserv.ObtenerUltimo(Obtenertienda());
+        Notificacion n = notificacionserv.consultar(Notificacion.class,id);
+        if(n == null){
+          return true;
+        }
+        return true;
+    }
+    
   
     public void verpreventa(Long id, Tienda t, Cliente c, Date fecha, String tipo, double total){
         setPre(new Preventa(id, t, c, fecha,tipo, total));
@@ -424,17 +468,42 @@ public class TiendaBean {
     }
     
     public void registrar(){
+        if(tiendaserv.validar(getTienda()) == null){
+        UbicaciongpsServices ubser = new UbicaciongpsServices();
         String pass=  utl.Encriptar(getPassword());
-       
+        Tienda tiendaubicacion = null;
+        Long id;
         try {
             
            
             getTienda().setContraseña(pass);
+            getTienda().setEstado(false);
             tiendaserv.crear(getTienda());
+            id = tiendaserv.Obtenerultima();
+            tiendaubicacion = new Tienda(id, getTienda().getNombretienda(), getTienda().getDireccion(), getTienda().getPropietario(), getTienda().getCedulapropietario(), getTienda().getUsuario(), pass, getTienda().getTelefono());
+           
+            Geocoding ObjGeocod=new Geocoding();
+            try {
+            
+            Point2D.Double resultadoCD=ObjGeocod.getCoordinates(getTienda().getDireccion());
+            getUbicaciongps().setTienda(tiendaubicacion);
+            getUbicaciongps().setLatitud(""+resultadoCD.x);
+            getUbicaciongps().setLonguitud(""+resultadoCD.y);
+             ubser.crear(getUbicaciongps());
+  
+          
+            } catch (Exception e) {
+                error("Codificación geográfica");
+            }
+           
             crearCarpeta();
             FacesMessages.info(getTienda().getNombretienda() + " se ha registrado!");
             setTienda(new Tienda());
         } catch (Exception e) {
+        }}else{
+          FacesMessages.error("Ya existe una tienda con este nombre");
+            setTienda(new Tienda());
+                  
         }
         
     }
@@ -656,6 +725,54 @@ public class TiendaBean {
 
     public void setProductopromocionar(Producto productopromocionar) {
         this.productopromocionar = productopromocionar;
+    }
+
+    public boolean isDetenerpoll() {
+        return detenerpoll;
+    }
+
+    public void setDetenerpoll(boolean detenerpoll) {
+        this.detenerpoll = detenerpoll;
+    }
+
+    public Ubicaciongps getUbicaciongps() {
+        return ubicaciongps;
+    }
+
+    public void setUbicaciongps(Ubicaciongps ubicaciongps) {
+        this.ubicaciongps = ubicaciongps;
+    }
+
+    public Cliente getCli() {
+        return cli;
+    }
+
+    public void setCli(Cliente cli) {
+        this.cli = cli;
+    }
+
+    public Tienda getTs() {
+        return ts;
+    }
+
+    public void setTs(Tienda ts) {
+        this.ts = ts;
+    }
+
+    public String getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(String latitud) {
+        this.latitud = latitud;
+    }
+
+    public String getLonguitud() {
+        return longuitud;
+    }
+
+    public void setLonguitud(String longuitud) {
+        this.longuitud = longuitud;
     }
 
    

@@ -9,6 +9,7 @@ import com.dao.IDao;
 import com.entity.Cliente;
 import com.entity.Noticia;
 import com.entity.Tienda;
+import com.entity.Ubicaciongps;
 import java.util.List;
 
 /**
@@ -20,4 +21,6 @@ public interface ITienda extends IDao<Tienda, Long>{
     Long Obtenerultima();
     List<Cliente> Clienteestrella();
     List<Noticia> listarnoticias();
+    Ubicaciongps obtenerubicacion(Tienda ti);
+    Tienda validar(Tienda c);
 }
