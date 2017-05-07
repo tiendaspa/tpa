@@ -5,7 +5,10 @@
  */
 package com.controller;
 
+import com.entity.Producto;
+import com.entity.Tienda;
 import com.entity.Ubicaciongps;
+import com.services.TiendaServices;
 import com.services.UbicaciongpsServices;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +34,11 @@ public class UbicaciongpsBean {
     private ArrayList<Ubicaciongps> listaubicacion = new ArrayList<>();
     private Marker marker;
     
+    private MapModel product;
+    private ArrayList<Ubicaciongps> listaubicacionproducto = new ArrayList<>();
+    private Marker marker1;
+    private String buscarproducto =null;
+    private boolean mostraragotado = false;
     public UbicaciongpsBean() {
      listarmap();
     }
@@ -56,6 +64,49 @@ public class UbicaciongpsBean {
          
       
     
+    }
+   public void listarproductoenmapa(){
+        ArrayList<Producto> listaprod = new ArrayList<>();
+        TiendaServices ts = new TiendaServices();
+         UbicaciongpsServices ubser = new UbicaciongpsServices();
+     
+        listaprod = (ArrayList<Producto>) ts.listaproductobuscar(getBuscarproducto());
+        ArrayList<Tienda> listatienda = new ArrayList<>();
+        setListaubicacionproducto((ArrayList<Ubicaciongps>) ubser.consultarTodo(Ubicaciongps.class));
+        if(listaprod.isEmpty()){
+            setMostraragotado(true);
+        }else{
+            setMostraragotado(false);
+        }
+      
+         
+         product = new DefaultMapModel();
+        
+        for(int i =0; i < getListaubicacionproducto().size(); i++){
+             for(int j =0; j < listaprod.size(); j++){
+                if(getListaubicacionproducto().get(i).getTienda().equals(listaprod.get(j).getTienda())){
+                 
+                LatLng coordi = new LatLng(Double.parseDouble(getListaubicacionproducto().get(i).getLatitud()),Double.parseDouble(getListaubicacionproducto().get(i).getLonguitud()));
+                    if(getListaubicacionproducto().get(i).getTienda().isEstado() == true){
+                      product.addOverlay(new Marker(coordi,"Tienda con produco ", "Pan de queso","http://icons.iconarchive.com/icons/fatcow/farm-fresh/32/shop-open-icon.png" ));
+                    }else{
+                      product.addOverlay(new Marker(coordi,"Tienda con produco pero esta cerrada", "Pan de queso","http://icons.iconarchive.com/icons/fatcow/farm-fresh/32/shop-closed-icon.png" ));
+                    }
+                  
+                }
+             }
+             
+             
+        }
+      
+      /* TiendaServices ts = new TiendaServices();
+       ArrayList<Producto> listanoticia = new ArrayList<>();
+       listanoticia = (ArrayList<Producto>) ts.listaproductobuscar("a");
+       for(int i =0; i < listanoticia.size();i++){
+       
+           System.err.println(listanoticia.get(i).getNombreproducto());
+       }*/
+        
     }
 
     public List<MapModel> getListamapmodel() {
@@ -83,6 +134,46 @@ public class UbicaciongpsBean {
       
     public Marker getMarker() {
         return marker;
+    }
+
+    public MapModel getProduct() {
+        return product;
+    }
+
+    public void setProduct(MapModel product) {
+        this.product = product;
+    }
+
+    public Marker getMarker1() {
+        return marker1;
+    }
+
+    public void setMarker1(Marker marker1) {
+        this.marker1 = marker1;
+    }
+
+    public ArrayList<Ubicaciongps> getListaubicacionproducto() {
+        return listaubicacionproducto;
+    }
+
+    public void setListaubicacionproducto(ArrayList<Ubicaciongps> listaubicacionproducto) {
+        this.listaubicacionproducto = listaubicacionproducto;
+    }
+
+    public String getBuscarproducto() {
+        return buscarproducto;
+    }
+
+    public void setBuscarproducto(String buscarproducto) {
+        this.buscarproducto = buscarproducto;
+    }
+
+    public boolean isMostraragotado() {
+        return mostraragotado;
+    }
+
+    public void setMostraragotado(boolean mostraragotado) {
+        this.mostraragotado = mostraragotado;
     }
     
 }

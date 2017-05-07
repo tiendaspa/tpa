@@ -98,7 +98,7 @@
                         </b:panelGrid>
                     </div>
                     <div style=" float: right">
-                        <b:image style="height: 100px;" value="http://icon-icons.com/icons2/20/PNG/256/business_man_user_alert_alerttheuser_askthecustomer_negocio_2331.png" tooltip="Completa información"></b:image>
+                        <b:image style="height: 100px;" value="/resources/img/utilidades/usernego.png" tooltip="Completa información"></b:image>
                         
                     </div>
                 </b:panel> 
@@ -162,14 +162,18 @@
                              
                             <c:forEach items="#{usuarioBean.listarreciente}" var="productorecientes">
                                     <h:form>
-                                        <b:column col-md="2">
-                                            <b:image  style="width: 40%;height: 80px;border-radius: 60px;"  value="/resources/img/img_tienda/#{productorecientes.img}"></b:image>
-                                            <p>#{productorecientes.nombre}</p>
+                                       <b:column col-md="3">
+                                            <b:panel class="panelproducto" title="#{productorecientes.nombre}" collapsible="false">
+                                             
+                                            <b:image style="width: 60%;height: 80px;border-radius: 60px;"  value="/resources/img/img_tienda/#{productorecientes.img}"></b:image>
+                                     
                                             <p style="color: red">$#{productorecientes.precio}</p>
                                             <p><input type="number" style="width: 20%; border-radius: 20px;border:0px; overflow: hidden;" jsf:value="#{usuarioBean.cantidad}" /></p>
-                                            <p>  <b:label severity="warning" rendered="#{productorecientes.cantidad == 0 eq true}" text="AGOTADO"></b:label></p>
-                                             <p><b:commandButton rendered="#{productorecientes.cantidad == 0 eq false}" disabled="#{productorecientes.cantidad == 0 eq true}" look="info"  value="añadir al carrito" iconAwesome="shopping-cart"   actionListener="#{usuarioBean.añadiralcarrrito(productorecientes.id)}" /></p>
+                                            <b:label rendered="#{productorecientes.cantidad == 0 eq true}" text="AGOTADO"></b:label><p></p>
+                                            <b:label severity="primary" rendered="#{productorecientes.cantidad == 0 eq false}"  text="Disponibles #{productorecientes.cantidad}"></b:label><p></p>
+                                            <p><b:commandButton  look="info"  rendered="#{productorecientes.cantidad == 0 eq false}" value="añadir al carrito" disabled="#{productorecientes.tienda.estado == false eq true}" iconAwesome="shopping-cart"    actionListener="#{usuarioBean.añadiralcarrrito(productorecientes.id)}" /></p>
                                                    
+                                            </b:panel>
                                         </b:column>
                                       
                                     </h:form>

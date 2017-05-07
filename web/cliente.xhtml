@@ -34,7 +34,7 @@
              <b:growl id="growlMsg" globalOnly="true" placementFrom="bottom"
                     show-detail="true" show-summary="false" allowDismiss="true"
                     delay="3000" escape="true" /> 
-                <h:form>  <p:poll interval="1"  listener="#{tiendaBean.listpreventas()}" update=":growlMsg"  /> </h:form>
+             <h:form>  <p:poll async="true"  interval="2"  listener="#{tiendaBean.listpreventas()}" update=":growlMsg"  /> </h:form>
             <b:row>
                 <b:column col-sm="3" col-md="2" styleClass="sidebar">
                     <b:listLinks>
@@ -73,7 +73,7 @@
                             
                             <b:panel title="Agregar nuevo cliente" collapsible="false"> 
                                 <b:alert class="panelregistroexitoso"  closable="true" rendered="#{clienteBean.clienteregistrado}" severity="success"><strong>Registro exitoso!</strong> Ahora cuentas con un nuevo cliente. </b:alert>
-                                <b:button value="Ok" look="primary" onclick="ajax:clienteBean.ocultarpanel()"  ></b:button>
+                              
                                 <div style="width:50%; float: left; margin-left: 70px;" id="prueba">
                                     <b:row>
                                         <b:inputText value="#{clienteBean.clienteregistrar.nombre}" large-screen="full-width" placeholder="Nombre" >
@@ -115,7 +115,7 @@
                                     <b:commandButton style="width: 100px;" look="primary" value="Registrar" iconAwesome="ok" id="btn-5" class="botonblock" actionListener="#{clienteBean.registrar()}" update="@form"></b:commandButton>      
                                 </div>             
                                 <div style="width: 30%; float: right; margin-right: 50px;">
-                                    <b:image value="http://www.freeiconspng.com/uploads/user-add-icon---shine-set-add-new-user-add-user-30.png" tooltip="Agregar cliente" />
+                                    <b:image value="/resources/img/utilidades/useradd.png" tooltip="Agregar cliente" />
                                 </div>              
                             </b:panel>
                             
@@ -195,7 +195,7 @@
                                     </div>
                         <div style="width: 30%; float: right; margin-right: 50px;">
                             <b:image rendered="#{clienteBean.cliente.img == null eq false}"  style="width: 100%; height: 300px; border-radius: 60px;"  value="/resources/img/img_cliente/#{clienteBean.cliente.img}" tooltip="Modificar a #{clienteBean.cliente.nombre}" />
-                            <b:image rendered="#{clienteBean.cliente.img == null eq true}"  style="width: 100%; height: 300px; border-radius: 60px;" value="https://icemdstaticcontent.blob.core.windows.net/profesionales/perfiles/perfilVacio.png"></b:image>
+                            <b:image rendered="#{clienteBean.cliente.img == null eq true}"  style="width: 100%; height: 300px; border-radius: 60px;" value="/resources/img/utilidades/perfilvacio.png"></b:image>
                             <p></p><center> <b:commandButton look="success" value="Asignar código" iconAwesome="thumbs-up" actionListener="#{clienteBean.habilitarcodigo()}"></b:commandButton></center>
                         </div>   
                 </b:panel>

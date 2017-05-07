@@ -113,7 +113,7 @@ public class DebitoBean {
        ds.modificar(getDebito());
        FacesMessages.info(getMoracliente().getCliente().getNombre() + " A sido reportado por moroso!");
        setPanelmora(false);
-        setMostrarcreditos(true);
+       setMostrarcreditos(true);
     }
      public Tienda Obtenertienda(){
         Tienda p= (Tienda) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("tienda");

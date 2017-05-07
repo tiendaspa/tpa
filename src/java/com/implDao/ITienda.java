@@ -8,6 +8,7 @@ package com.implDao;
 import com.dao.IDao;
 import com.entity.Cliente;
 import com.entity.Noticia;
+import com.entity.Producto;
 import com.entity.Tienda;
 import com.entity.Ubicaciongps;
 import java.util.List;
@@ -23,4 +24,5 @@ public interface ITienda extends IDao<Tienda, Long>{
     List<Noticia> listarnoticias();
     Ubicaciongps obtenerubicacion(Tienda ti);
     Tienda validar(Tienda c);
+    List<Producto> listaproductobuscar(String par);
 }

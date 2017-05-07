@@ -6,14 +6,16 @@
 package com.implDao;
 
 import com.dao.IDao;
-import com.entity.Cliente;
-import com.entity.Mora;
+import com.entity.Producto;
+import com.entity.Proveedor;
+import com.entity.Tienda;
+import java.util.List;
 
 /**
  *
  * @author DAC-PC
  */
-public interface IMora extends IDao<Mora, Long>{
- 
-    
+public interface IProveedor extends IDao<Proveedor, Long>{
+     List<Proveedor> listarproducto(Tienda c);
+     Proveedor verproveedor(Long id);
 }

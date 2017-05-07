@@ -12,6 +12,7 @@ package com.controller;
 public class Rutaimg {
     private String rutaproductos = "D:\\PA\\TpaSolutions\\web\\resources\\img\\img_tienda\\";
     private String rutaclientes =  "D:\\PA\\TpaSolutions\\web\\resources\\img\\img_cliente\\";
+    private String rutaprovvedores = "D:\\PA\\TpaSolutions\\web\\resources\\img\\img_proveedor\\";
 
     public String getRutaproductos() {
         return rutaproductos;
@@ -27,6 +28,14 @@ public class Rutaimg {
 
     public void setRutaclientes(String rutaclientes) {
         this.rutaclientes = rutaclientes;
+    }
+
+    public String getRutaprovvedores() {
+        return rutaprovvedores;
+    }
+
+    public void setRutaprovvedores(String rutaprovvedores) {
+        this.rutaprovvedores = rutaprovvedores;
     }
     
     

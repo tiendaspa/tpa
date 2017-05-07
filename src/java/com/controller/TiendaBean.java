@@ -109,7 +109,7 @@ public class TiendaBean {
         this.mostrarpanelpromocion = mostrarpanelpromocion;
     }
     public TiendaBean() {
-     
+    
         clientemascomprador();
         setPruebacliente(obtenerCliente());
         listarnoticias();
@@ -507,11 +507,15 @@ public class TiendaBean {
         }
         
     }
+    
     public void crearCarpeta(){
         String ruta = "D:\\PA\\TpaSolutions\\web\\resources\\img\\img_tienda\\";
+        String ruta2 = "D:\\PA\\TpaSolutions\\web\\resources\\img\\img_proveedor\\";
         long id= tiendaserv.Obtenerultima();
         File dir = new File(ruta+id);
+        File dir2 = new File(ruta2+id);
         dir.mkdir();
+        dir2.mkdir();
     }
     public void listar(){
         setListatienda((ArrayList<Tienda>) tiendaserv.consultarTodo(Tienda.class));
@@ -587,17 +591,17 @@ public class TiendaBean {
         this.ingresos = ingresos;
     }
      
-  /* public static void main(String[] args){
+  public static void main(String[] args){
        TiendaServices ts = new TiendaServices();
-       ArrayList<Noticia> listanoticia = new ArrayList<>();
-       listanoticia = (ArrayList<Noticia>) ts.listarnoticias();
+       ArrayList<Producto> listanoticia = new ArrayList<>();
+       listanoticia = (ArrayList<Producto>) ts.listaproductobuscar("a");
        for(int i =0; i < listanoticia.size();i++){
        
-           System.err.println(listanoticia.get(i).getTitulo());
+           System.err.println(listanoticia.get(i).getTienda());
        }
        
     
-    }*/
+    }
 
     public Preventa getPre() {
         return pre;

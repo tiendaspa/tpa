@@ -219,9 +219,9 @@ public class UsuarioBean {
                     preventaser.crear(c);
 
                     generardetallepreventa();
-                      not.setCliente(obtenerCliente());
-        not.setTienda(obtenerCliente().getTienda());
-        notificacionserv.crear(not);
+                    not.setCliente(obtenerCliente());
+                    not.setTienda(obtenerCliente().getTienda());
+                    notificacionserv.crear(not);
                     detallepreventa.clear();
                     setNotifycar(detallepreventa.size());
                     setTotal(0);

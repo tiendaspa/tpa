@@ -9,7 +9,8 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Dashboard Template for BootsFaces</title>
-        <meta name="author" content="Riccardo Massera"></meta>
+    
+         <f:event type="preRenderView" listener="#{templateValidate.verificar()}"></f:event>
         <f:event type="preRenderView" listener="#{debitoBean.listarcredito()}"></f:event>
     </h:head>
     <h:body style="padding-top: 60px">
@@ -128,7 +129,7 @@
                           
                             </b:column>
                             <b:column col-md="4">
-                                <b:image value="http://wildaboutfinance.com/wp-content/uploads/2015/05/man_debts.png"></b:image>
+                                <b:image value="/resources/img/utilidades/deuda.png"></b:image>
                             </b:column>
                             
                             </h:form>
@@ -163,7 +164,7 @@
                             </b:column>
                                     
                                         <b:column col-md="2">
-                                         <b:image style="float: right;" value="http://icons.iconarchive.com/icons/rockettheme/ecommerce/256/basket-icon.png"></b:image>
+                                         <b:image style="float: right;" value="/resources/img/utilidades/canasta.png"></b:image>
                                         </b:column>
                                   
                                     
@@ -184,7 +185,7 @@
                                           <b:commandButton look="success" icon="piggy-bank" value="Abobar" actionListener="#{debitoBean.abonar()}" />
                                   </b:column>
                                   <b:column col-md="4">
-                                      <b:image style="height: 300px;" value="http://icon-icons.com/icons2/550/PNG/512/business-color_payment_icon-icons.com_53442.png"></b:image>
+                                      <b:image style="height: 300px;" value="/resources/img/utilidades/pagar.png"></b:image>
                                   </b:column>
                                   <f:facet name="footer">
                                       <b:label text="#{tiendaBean.hello}"></b:label>

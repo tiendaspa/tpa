@@ -108,8 +108,10 @@ public class ProductoBean {
                     setPro(new Producto());
                     listar();
                 }catch(IOException e){
-                    
+                    setPro(new Producto());
                 }
+            }else{
+             setPro(new Producto());
             }
             
             

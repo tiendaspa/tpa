@@ -6,6 +6,7 @@
 package com.services;
 
 import com.dao.ImplDao;
+import com.entity.Cliente;
 import com.entity.Mora;
 import com.implDao.IMora;
 import java.io.Serializable;
@@ -15,5 +16,6 @@ import java.io.Serializable;
  * @author DAC-PC
  */
 public class MoraServices extends ImplDao<Mora, Long> implements IMora, Serializable{
+
     
 }

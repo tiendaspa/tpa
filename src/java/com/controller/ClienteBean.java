@@ -9,11 +9,13 @@ package com.controller;
 import com.entity.Cliente;
 import com.entity.CodigoSesion;
 import com.entity.Comentario;
+import com.entity.Mora;
 import com.entity.Tienda;
 
 import com.services.ClienteServices;
 import com.services.CodigoServices;
 import com.services.ComentarioServices;
+import com.services.MoraServices;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -143,6 +145,16 @@ public class ClienteBean implements Serializable{
         setVercomentarios(false);
     }
     public void registrar(){
+        MoraServices moraserv = new MoraServices();
+        Boolean moroso = false;
+        ArrayList<Mora> listamorosos = (ArrayList<Mora>) moraserv.consultarTodo(Mora.class);
+        for(int i =0; i < listamorosos.size(); i++){
+            if(listamorosos.get(i).getCliente().getCedula().equals(getClienteregistrar().getCedula())){
+                moroso = true;
+                FacesMessages.fatal("El cliente que intenta registrar se encuentra en la lista de morosos!");
+            }
+        }
+        if(moroso == false){
         try {
             Thread.sleep(2000);
         } catch (Exception e) {
@@ -150,9 +162,11 @@ public class ClienteBean implements Serializable{
         getClienteregistrar().setTienda(Obtenertienda());
         clienteserv.crear(getClienteregistrar());
         setClienteregistrado(true);
+    
         listar();
         setClienteregistrar(new Cliente());
-       
+        }
+        setClienteregistrar(new Cliente());
      
     }
     public void ocultarpanel(){

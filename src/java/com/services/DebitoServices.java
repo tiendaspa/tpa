@@ -32,6 +32,7 @@ public class DebitoServices extends ImplDao<Debito, Long> implements IDebito, Se
             Query query = getEmf().createEntityManager().createQuery(consulta);
             query.setParameter(1, t);
             query.setParameter(2, "Pendiente");
+        
            
             listar =(ArrayList<Debito>) query.getResultList();
             return listar;

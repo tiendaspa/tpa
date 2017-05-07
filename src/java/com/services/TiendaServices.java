@@ -9,6 +9,7 @@ import com.controller.Utilidades;
 import com.dao.ImplDao;
 import com.entity.Cliente;
 import com.entity.Noticia;
+import com.entity.Producto;
 import com.entity.Tienda;
 import com.entity.Ubicaciongps;
 import com.implDao.ITienda;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Query;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -150,6 +152,22 @@ public class TiendaServices extends ImplDao<Tienda , Long> implements ITienda,Se
             getEntityManagger().close();
         }
         return tienda;
+    }
+
+    @Override
+    public List<Producto> listaproductobuscar(String par) {
+        List<Producto> listaproducto = new ArrayList<>();
+        
+        try {
+            String consulta ="FROM Producto p WHERE p.nombreproducto LIKE '%"+par+"%' and p.cantidad > 0";
+            Query query = getEmf().createEntityManager().createQuery(consulta);
+          
+            listaproducto = query.getResultList();
+           
+            return listaproducto;
+        } catch (Exception e) {
+        }
+        return listaproducto;
     }
 
   
