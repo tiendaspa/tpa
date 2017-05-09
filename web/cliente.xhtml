@@ -13,39 +13,46 @@
         
     </h:head>
     <h:body id="bodycliente" style="padding-top: 60px">
-       <h:outputScript library="holder" name="holder.js" />
+      <h:outputScript library="holder" name="holder.js" />
         <!--script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.5.2/holder.min.js"></script-->
-            <b:navBar  brandHref="#" inverse="true" fixed="top" fluid="true">
+        <b:navBar  brandHref="#" inverse="true" fixed="top" fluid="true">
             <b:image onclick="window.location.href='tpasolution.xhtml'"   tooltip="Hola, #{tiendaBean.hello}" tooltipPosition="right" class="probar" style="width: 15%;margin-left: -15px; height: 50px; cursor: pointer;" value="/resources/img/logo.png"></b:image>
             <b:navbarLinks pull="right">
-            <b:navLink  id="coment" value="Ver comentarios " icon-awesome="globe" iconAlign="right" href="comentario.xhtml"> <b:badge id="notify" value="#{clienteBean.numero}"
+                <b:navLink  id="coment" value="Comentarios"  icon-awesome="comment" iconAlign="left" href="comentario.xhtml"> <b:badge id="notify" value="#{clienteBean.numero}"
                                                                                                                                                      tooltip="Tienes #{clienteBean.numero} mensajes por revisar" style="#{clienteBean.style()}" tooltip-position="left"
-/>          </b:navLink>    
-            <b:navLink value="Pedidos en linea" href="pedidos.xhtml"></b:navLink>
+/>      </b:navLink>    
+                <b:navLink  id="bagdepedido" value="Pedidos" icon-awesome="shopping-cart"  href="pedidos.xhtml"> <b:badge  style="background-color: red;" value="#{tiendaBean.listapre.size()}"></b:badge></b:navLink>
                 
             </b:navbarLinks>
             <h:form styleClass="navbar-form navbar-right">
                 <div class="form-group">
-                    <b:inputText placeholder="Search..." fieldSize="sm"/>
+                    <b:inputText placeholder="Search..." typeahead="true" typeahead-values="#{clienteBean.listacliente}" fieldSize="sm"/>
                 </div>
             </h:form>
         </b:navBar>
         <b:container fluid="true">
-             <b:growl id="growlMsg" globalOnly="true" placementFrom="bottom"
-                    show-detail="true" show-summary="false" allowDismiss="true"
-                    delay="3000" escape="true" /> 
-             <h:form>  <p:poll async="true"  interval="2"  listener="#{tiendaBean.listpreventas()}" update=":growlMsg"  /> </h:form>
-            <b:row>
+            <b:growl id="growlMsg" globalOnly="true" placementFrom="bottom" placementAlign="left"
+        show-detail="true" show-summary="false" allowDismiss="true"
+        escape="true"  icon="globe" delay="20000" style="background: transparent; " /> 
+            <h:form>
+                <p:poll async="true" interval="3" listener="#{tiendaBean.listpreventas()}" update=":growlMsg"></p:poll>
+            </h:form>
+        
+             <b:row>
                 <b:column col-sm="3" col-md="2" styleClass="sidebar">
                     <b:listLinks>
                         <b:navLink  value="Clientes" iconAwesome="user" outcome="cliente.xhtml"></b:navLink>
                         <b:navLink value="Productos" iconAwesome="apple" outcome="productos_2.xhtml"></b:navLink>
                         <b:navLink value="Ventas" icon-awesome="usd" outcome="venta.xhtml"></b:navLink>
-                        <b:navLink value="Proveedor" icon-awesome="shopping-cart" href="#"></b:navLink>
-                        <h:form>
+                        <b:navLink value="Proveedor" icon-awesome="shopping-cart" outcome="proveedor.xhtml"></b:navLink>
+                        <b:navLink value="Créditos" icon-awesome="credit-cart" outcome="credito.xhtml"></b:navLink>
+                         
+                          
+                            <h:form>
                                 <b:commandButton  look="link" value="Cerrar sesion" actionListener="#{tiendaBean.cerrarsesion()}" action="/index?faces-redirect=true"></b:commandButton>
-                        </h:form>
+                            </h:form>
                     </b:listLinks>
+                 
                 </b:column>
                 <b:column col-sm="9" offset-sm="3" col-md="10" offset="2" styleClass="main">
                     <hr/>
@@ -72,7 +79,7 @@
                         <b:tab title="Registrar Cliente ">
                             
                             <b:panel title="Agregar nuevo cliente" collapsible="false"> 
-                                <b:alert class="panelregistroexitoso"  closable="true" rendered="#{clienteBean.clienteregistrado}" severity="success"><strong>Registro exitoso!</strong> Ahora cuentas con un nuevo cliente. </b:alert>
+                                
                               
                                 <div style="width:50%; float: left; margin-left: 70px;" id="prueba">
                                     <b:row>
@@ -112,7 +119,7 @@
                                           </f:facet>
                                         </b:inputText>
                                     </b:row>
-                                    <b:commandButton style="width: 100px;" look="primary" value="Registrar" iconAwesome="ok" id="btn-5" class="botonblock" actionListener="#{clienteBean.registrar()}" update="@form"></b:commandButton>      
+                                    <b:commandButton style="width: 100px;" look="primary" value="Registrar" iconAwesome="ok" id="btn-5" class="botonblock" actionListener="#{clienteBean.registrar()}" ></b:commandButton>      
                                 </div>             
                                 <div style="width: 30%; float: right; margin-right: 50px;">
                                     <b:image value="/resources/img/utilidades/useradd.png" tooltip="Agregar cliente" />

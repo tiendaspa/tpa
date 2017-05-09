@@ -131,6 +131,9 @@ public class TiendaBean {
          if(Obtenertienda().isEstado() ==  false){
              Obtenertienda().setEstado(true);
              tiendaserv.modificar(Obtenertienda());
+         }else{
+            Obtenertienda().setEstado(false);
+            tiendaserv.modificar(Obtenertienda());
          }
     }
     

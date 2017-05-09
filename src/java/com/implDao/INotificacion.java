@@ -6,6 +6,7 @@
 package com.implDao;
 
 import com.dao.IDao;
+import com.entity.Cliente;
 import com.entity.Notificacion;
 import com.entity.Tienda;
 
@@ -15,4 +16,5 @@ import com.entity.Tienda;
  */
 public interface INotificacion extends IDao<Notificacion, Long>{
     long ObtenerUltimo(Tienda c);
+    long Obtenerultimoclien(Cliente c);
 }

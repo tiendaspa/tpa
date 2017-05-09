@@ -8,7 +8,7 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Dashboard Template for BootsFaces</title>
+        <title>Mora</title>
     
          <f:event type="preRenderView" listener="#{templateValidate.verificar()}"></f:event>
         <f:event type="preRenderView" listener="#{debitoBean.listarcredito()}"></f:event>
@@ -16,32 +16,37 @@
     <h:body style="padding-top: 60px">
        <h:outputScript library="holder" name="holder.js" />
         <!--script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.5.2/holder.min.js"></script-->
-        <b:navBar  brand="Hola, #{tiendaBean.hello}!" brandHref="#" inverse="true" fixed="top" fluid="true">
-            
+        <b:navBar  brandHref="#" inverse="true" fixed="top" fluid="true">
+            <b:image onclick="window.location.href='tpasolution.xhtml'"   tooltip="Hola, #{tiendaBean.hello}" tooltipPosition="right" class="probar" style="width: 15%;margin-left: -15px; height: 50px; cursor: pointer;" value="/resources/img/logo.png"></b:image>
             <b:navbarLinks pull="right">
-                <b:navLink  id="coment" value="Ver comentarios " icon-awesome="globe" iconAlign="right" href="comentario.xhtml"> <b:badge id="notify" value="#{clienteBean.numero}"
+                <b:navLink  id="coment" value="Comentarios"  icon-awesome="comment" iconAlign="left" href="comentario.xhtml"> <b:badge id="notify" value="#{clienteBean.numero}"
                                                                                                                                                      tooltip="Tienes #{clienteBean.numero} mensajes por revisar" style="#{clienteBean.style()}" tooltip-position="left"
-/>      </b:navLink>    <b:navLink value="Pedidos en linea" href="pedidos.xhtml"></b:navLink>
+/>      </b:navLink>    
+                <b:navLink  id="bagdepedido" value="Pedidos" icon-awesome="shopping-cart"  href="pedidos.xhtml"> <b:badge  style="background-color: red;" value="#{tiendaBean.listapre.size()}"></b:badge></b:navLink>
                 
             </b:navbarLinks>
             <h:form styleClass="navbar-form navbar-right">
                 <div class="form-group">
-                    <b:inputText placeholder="Search..." fieldSize="sm"/>
+                    <b:inputText placeholder="Search..." typeahead="true" typeahead-values="#{clienteBean.listacliente}" fieldSize="sm"/>
                 </div>
             </h:form>
         </b:navBar>
         <b:container fluid="true">
-             <b:growl id="growlMsg" globalOnly="true" placementFrom="bottom"
-                    show-detail="true" show-summary="false" allowDismiss="true"
-                    delay="3000" escape="true" /> 
-             
-            <b:row>
+            <b:growl id="growlMsg" globalOnly="true" placementFrom="bottom" placementAlign="left"
+        show-detail="true" show-summary="false" allowDismiss="true"
+        escape="true"  icon="globe" delay="20000" style="background: transparent; " /> 
+            <h:form>
+                <p:poll async="true" interval="3" listener="#{tiendaBean.listpreventas()}" update=":growlMsg"></p:poll>
+            </h:form>
+        
+             <b:row>
                 <b:column col-sm="3" col-md="2" styleClass="sidebar">
                     <b:listLinks>
                         <b:navLink  value="Clientes" iconAwesome="user" outcome="cliente.xhtml"></b:navLink>
                         <b:navLink value="Productos" iconAwesome="apple" outcome="productos_2.xhtml"></b:navLink>
-                            <b:navLink value="Ventas" icon-awesome="usd" outcome="venta.xhtml"></b:navLink>
-                            <b:navLink value="Proveedor" icon-awesome="shopping-cart" href="#"></b:navLink>
+                        <b:navLink value="Ventas" icon-awesome="usd" outcome="venta.xhtml"></b:navLink>
+                        <b:navLink value="Proveedor" icon-awesome="shopping-cart" outcome="proveedor.xhtml"></b:navLink>
+                        <b:navLink value="Créditos" icon-awesome="credit-cart" outcome="credito.xhtml"></b:navLink>
                          
                           
                             <h:form>
@@ -52,7 +57,7 @@
                 </b:column>
            
                 <b:column col-sm="9" offset-sm="3" col-md="10" offset="2" styleClass="main">
-                    <h1>Débitos</h1>
+                    <h1>Moras</h1>
                     <hr/>
                     <b:row styleClass="placeholders">
                         <b:carousel id="parque">
@@ -82,12 +87,12 @@
                   
                     <b:row styleClass="table-responsive">
                         <b:container rendered="#{debitoBean.mostrarcreditos}">
-                              <h3>Listado de debítos pendientes</h3>
+                              <h3>Pendientes</h3>
                     <hr/>
                               <h:form>
                             <b:dataTable value="#{debitoBean.listadebitos}" var="debito" lang="es" responsive="true" >
                              
-                                    <b:dataTableColumn value="">
+                                <b:dataTableColumn label="Imagen de cliente">
                                         <b:image style="width: 10%;" value="/resources/img/img_cliente/#{debito.cliente.img}"></b:image>
                                     </b:dataTableColumn>
                                 <b:dataTableColumn label="Fecha de pago" value="#{debito.fechapago}">
@@ -97,10 +102,13 @@
                                 <b:dataTableColumn label="más info..." labelStyle="color: red;">
                                             <b:commandButton look="warning" value="Ver detalles" actionListener="#{debitoBean.ver(debito.venta, debito.venta.id, debito.venta.fecha,debito.total,debito)}"></b:commandButton>
                                     </b:dataTableColumn>
-                                <b:dataTableColumn>
+                                <b:dataTableColumn label="Reportar">
                          
                                     <b:commandButton rendered="#{debito.fechapago.compareTo(debitoBean.fecha)>0  eq false}" value="Reportar" look="danger" actionListener="#{debitoBean.reportar(debito.cliente,debito)}"></b:commandButton>
                                    
+                                </b:dataTableColumn>
+                                <b:dataTableColumn label="Recordar">
+                                    <b:commandButton value="Enviar recordatorio"  look="info" iconAwesome="info-sign" actionListener="#{debitoBean.recordar(debito.cliente, debito)}"></b:commandButton>
                                 </b:dataTableColumn>
                                 
                                 

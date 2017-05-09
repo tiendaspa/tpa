@@ -39,6 +39,8 @@ public class UbicaciongpsBean {
     private Marker marker1;
     private String buscarproducto =null;
     private boolean mostraragotado = false;
+        private ArrayList<Producto> listaprod = new ArrayList<>();
+        private ArrayList<String> listaproductonombre = new ArrayList<>();
     public UbicaciongpsBean() {
      listarmap();
     }
@@ -52,11 +54,11 @@ public class UbicaciongpsBean {
             LatLng coordi = new LatLng(Double.parseDouble(getListaubicacion().get(i).getLatitud()),Double.parseDouble(getListaubicacion().get(i).getLonguitud()));
            
             if(getListaubicacion().get(i).getTienda().isEstado()==true){
-                advancedModel.addOverlay(new Marker(coordi, "Tienda " + getListaubicacion().get(i).getTienda().getNombretienda(),"http://gasmilenio.com/f/ICONO_TIENDACONVENIENCIA_s1.jpg", logo));
+                advancedModel.addOverlay(new Marker(coordi, "Tienda " + getListaubicacion().get(i).getTienda().getNombretienda(),"http://gasmilenio.com/f/ICONO_TIENDACONVENIENCIA_s1.jpg", "http://icons.iconarchive.com/icons/fatcow/farm-fresh/32/shop-open-icon.png"));
             
              }
             if(getListaubicacion().get(i).getTienda().isEstado()==false){
-                advancedModel.addOverlay(new Marker(coordi, "Tienda " + getListaubicacion().get(i).getTienda().getNombretienda(), "http://gasmilenio.com/f/ICONO_TIENDACONVENIENCIA_s1.jpg", "http://icons.iconarchive.com/icons/icons8/windows-8/32/Business-Shop-icon.png"));
+                advancedModel.addOverlay(new Marker(coordi, "Tienda " + getListaubicacion().get(i).getTienda().getNombretienda(), "http://gasmilenio.com/f/ICONO_TIENDACONVENIENCIA_s1.jpg", "http://icons.iconarchive.com/icons/fatcow/farm-fresh/32/shop-closed-icon.png" ));
             }
            
             
@@ -65,12 +67,21 @@ public class UbicaciongpsBean {
       
     
     }
+    public void buscar(){
+        TiendaServices ts = new TiendaServices();  
+        setListaprod((ArrayList<Producto>) ts.listaproductobuscar(getBuscarproducto()));
+        
+        for(int i =0; i <getListaprod().size(); i++){
+         listaproductonombre.add(getListaprod().get(i).getNombre());
+        }
+    }
+
    public void listarproductoenmapa(){
-        ArrayList<Producto> listaprod = new ArrayList<>();
+      
         TiendaServices ts = new TiendaServices();
          UbicaciongpsServices ubser = new UbicaciongpsServices();
      
-        listaprod = (ArrayList<Producto>) ts.listaproductobuscar(getBuscarproducto());
+        setListaprod((ArrayList<Producto>) ts.listaproductobuscar(getBuscarproducto()));
         ArrayList<Tienda> listatienda = new ArrayList<>();
         setListaubicacionproducto((ArrayList<Ubicaciongps>) ubser.consultarTodo(Ubicaciongps.class));
         if(listaprod.isEmpty()){
@@ -174,6 +185,22 @@ public class UbicaciongpsBean {
 
     public void setMostraragotado(boolean mostraragotado) {
         this.mostraragotado = mostraragotado;
+    }
+
+    public ArrayList<Producto> getListaprod() {
+        return listaprod;
+    }
+
+    public void setListaprod(ArrayList<Producto> listaprod) {
+        this.listaprod = listaprod;
+    }
+
+    public ArrayList<String> getListaproductonombre() {
+        return listaproductonombre;
+    }
+
+    public void setListaproductonombre(ArrayList<String> listaproductonombre) {
+        this.listaproductonombre = listaproductonombre;
     }
     
 }

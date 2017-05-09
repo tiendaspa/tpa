@@ -16,6 +16,6 @@ import java.util.List;
  * @author DAC-PC
  */
 public interface IProveedor extends IDao<Proveedor, Long>{
-     List<Proveedor> listarproducto(Tienda c);
+     List<Proveedor> listarproveedor(Tienda c);
      Proveedor verproveedor(Long id);
 }

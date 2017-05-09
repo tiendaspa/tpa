@@ -7,70 +7,55 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Dashboard Template for BootsFaces</title>
-        <meta name="author" content="Riccardo Massera"></meta>
+        <title>Comentario</title>
+        
         <f:event type="preRenderView" listener="#{templateValidate.verificar()}"></f:event>
     </h:head>
     <h:body style="padding-top: 60px">
        
         <h:outputScript library="holder" name="holder.js" />
         <!--script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.5.2/holder.min.js"></script-->
-         <ui:insert name="top">
-        <b:navBar brand="Project name" brandHref="#" inverse="true" fixed="top" fluid="true">
-            
+        <b:navBar  brandHref="#" inverse="true" fixed="top" fluid="true">
+            <b:image onclick="window.location.href='tpasolution.xhtml'"   tooltip="Hola, #{tiendaBean.hello}" tooltipPosition="right" class="probar" style="width: 15%;margin-left: -15px; height: 50px; cursor: pointer;" value="/resources/img/logo.png"></b:image>
             <b:navbarLinks pull="right">
-                <b:navLink value="Dashboard" href="#"></b:navLink>
-                <b:navLink value="Settings" href="#"></b:navLink>
-                <b:navLink value="Profile" href="#"></b:navLink>
-                <b:navLink value="Help" href="#"></b:navLink>
+                <b:navLink  id="coment" value="Comentarios"  icon-awesome="comment" iconAlign="left" href="comentario.xhtml"> <b:badge id="notify" value="#{clienteBean.numero}"
+                                                                                                                                                     tooltip="Tienes #{clienteBean.numero} mensajes por revisar" style="#{clienteBean.style()}" tooltip-position="left"
+/>      </b:navLink>    
+                <b:navLink  id="bagdepedido" value="Pedidos" icon-awesome="shopping-cart"  href="pedidos.xhtml"> <b:badge  style="background-color: red;" value="#{tiendaBean.listapre.size()}"></b:badge></b:navLink>
+                
             </b:navbarLinks>
             <h:form styleClass="navbar-form navbar-right">
                 <div class="form-group">
-                    <b:inputText placeholder="Search..." fieldSize="sm"/>
+                    <b:inputText placeholder="Search..." typeahead="true" typeahead-values="#{clienteBean.listacliente}" fieldSize="sm"/>
                 </div>
             </h:form>
         </b:navBar>
-         </ui:insert>
         <b:container fluid="true">
-            <b:row>
-                <ui:insert name="let">
+            <b:growl id="growlMsg" globalOnly="true" placementFrom="bottom" placementAlign="left"
+        show-detail="true" show-summary="false" allowDismiss="true"
+        escape="true"  icon="globe" delay="20000" style="background: transparent; " /> 
+            <h:form>
+                <p:poll async="true" interval="3" listener="#{tiendaBean.listpreventas()}" update=":growlMsg"></p:poll>
+            </h:form>
+        
+             <b:row>
                 <b:column col-sm="3" col-md="2" styleClass="sidebar">
                     <b:listLinks>
-                        <b:navLink header="Dasboard Links" />
-                        <b:navLink href="#" value="Overview" active="true"/>
-                        <b:navLink href="#" value="Reports" />
-                        <b:navLink href="#" value="Analytics" />
-                        <b:navLink href="#" value="Export" />
+                        <b:navLink  value="Clientes" iconAwesome="user" outcome="cliente.xhtml"></b:navLink>
+                        <b:navLink value="Productos" iconAwesome="apple" outcome="productos_2.xhtml"></b:navLink>
+                        <b:navLink value="Ventas" icon-awesome="usd" outcome="venta.xhtml"></b:navLink>
+                        <b:navLink value="Proveedor" icon-awesome="shopping-cart" outcome="proveedor.xhtml"></b:navLink>
+                        <b:navLink value="Créditos" icon-awesome="credit-cart" outcome="credito.xhtml"></b:navLink>
+                         
+                          
+                            <h:form>
+                                <b:commandButton  look="link" value="Cerrar sesion" actionListener="#{tiendaBean.cerrarsesion()}" action="/index?faces-redirect=true"></b:commandButton>
+                            </h:form>
                     </b:listLinks>
-               
+                 
                 </b:column>
-                </ui:insert>
-                <ui:insert name="contenido">
                 <b:column col-sm="9" offset-sm="3" col-md="10" offset="2" styleClass="main">
-                    <h1>Tpa-Noticias</h1>
-                    <hr/>
-                    <b:row styleClass="placeholders">
-                        <b:column col-xs="6" col-sm="3" styleClass="placeholder">
-                            <img data-src="holder.js/200x200/sky" class="img-responsive" alt="Generic placeholder thumbnail"/>
-                            <h4>Label</h4>
-                            <span class="text-muted">Something else</span>
-                        </b:column>
-                        <b:column col-xs="6" col-sm="3" styleClass="placeholder">
-                            <img data-src="holder.js/200x200/vine" class="img-responsive" alt="Generic placeholder thumbnail"/>
-                            <h4>Label</h4>
-                            <span class="text-muted">Something else</span>
-                        </b:column>
-                        <b:column col-xs="6" col-sm="3" styleClass="placeholder">
-                            <img data-src="holder.js/200x200/sky" class="img-responsive" alt="Generic placeholder thumbnail"/>
-                            <h4>Label</h4>
-                            <span class="text-muted">Something else</span>
-                        </b:column>
-                        <b:column col-xs="6" col-sm="3" styleClass="placeholder">
-                            <img data-src="holder.js/200x200/vine" class="img-responsive" alt="Generic placeholder thumbnail"/>
-                            <h4>Label</h4>
-                            <span class="text-muted">Something else</span>
-                        </b:column>
-                    </b:row>
+               
                     <h1>Comentarios</h1>
                     <hr/>
                     <b:row styleClass="table-responsive">
@@ -123,7 +108,7 @@
               </h:form>
                     </b:row>
                 </b:column>
-                </ui:insert>
+    
             </b:row>
         </b:container> 
         <style type="text/css">

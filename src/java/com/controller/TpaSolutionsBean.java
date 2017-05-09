@@ -5,12 +5,14 @@
  */
 package com.controller;
 
+import com.entity.Tienda;
 import com.services.IngresosServices;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -28,12 +30,18 @@ public class TpaSolutionsBean {
     private double ingreso;
     private boolean mostrarmapatiendas = false;
     private boolean mostrarjumbo = true;
+    private boolean open = Obtenertienda().isEstado();
     public TpaSolutionsBean() throws TwitterException {
     
     }
     public void mostrarmapa(){
         setMostrarmapatiendas(true);
         setMostrarjumbo(false);
+    }
+    
+    public Tienda Obtenertienda(){
+        Tienda p= (Tienda) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("tienda");
+        return p;
     }
     
   
@@ -63,6 +71,14 @@ public class TpaSolutionsBean {
 
     public void setMostrarjumbo(boolean mostrarjumbo) {
         this.mostrarjumbo = mostrarjumbo;
+    }
+
+    public boolean isOpen() {
+        return open;
+    }
+
+    public void setOpen(boolean open) {
+        this.open = open;
     }
 
  

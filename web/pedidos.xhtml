@@ -19,27 +19,29 @@
                 <b:navLink  id="coment" value="Comentarios"  icon-awesome="comment" iconAlign="left" href="comentario.xhtml"> <b:badge id="notify" value="#{clienteBean.numero}"
                                                                                                                                                      tooltip="Tienes #{clienteBean.numero} mensajes por revisar" style="#{clienteBean.style()}" tooltip-position="left"
 />      </b:navLink>    
-                <b:navLink value="Pedidos" icon-awesome="shopping-cart"  href="pedidos.xhtml"> <b:badge style="background-color: red;" value="#{tiendaBean.listapre.size()}"></b:badge></b:navLink>
+                <b:navLink  id="bagdepedido" value="Pedidos" icon-awesome="shopping-cart"  href="pedidos.xhtml"> <b:badge  style="background-color: red;" value="#{tiendaBean.listapre.size()}"></b:badge></b:navLink>
                 
             </b:navbarLinks>
             <h:form styleClass="navbar-form navbar-right">
                 <div class="form-group">
-                    <b:inputText placeholder="Search..." fieldSize="sm"/>
+                    <b:inputText placeholder="Search..." typeahead="true" typeahead-values="#{clienteBean.listacliente}" fieldSize="sm"/>
                 </div>
             </h:form>
         </b:navBar>
         <b:container fluid="true">
-            <b:growl id="growlMsg" globalOnly="true" placementFrom="bottom"
-                    show-detail="true" show-summary="false" allowDismiss="true"
-                    delay="3000" escape="true" /> 
-             
+            <b:growl id="growlMsg" globalOnly="true" placementFrom="bottom" placementAlign="left"
+        show-detail="true" show-summary="false" allowDismiss="true"
+        escape="true"  icon="globe" delay="20000" style="background: transparent; " /> 
+           
+        
              <b:row>
                 <b:column col-sm="3" col-md="2" styleClass="sidebar">
                     <b:listLinks>
                         <b:navLink  value="Clientes" iconAwesome="user" outcome="cliente.xhtml"></b:navLink>
                         <b:navLink value="Productos" iconAwesome="apple" outcome="productos_2.xhtml"></b:navLink>
-                            <b:navLink value="Ventas" icon-awesome="usd" outcome="venta.xhtml"></b:navLink>
-                            <b:navLink value="Proveedor" icon-awesome="shopping-cart" href="#"></b:navLink>
+                        <b:navLink value="Ventas" icon-awesome="usd" outcome="venta.xhtml"></b:navLink>
+                        <b:navLink value="Proveedor" icon-awesome="shopping-cart" outcome="proveedor.xhtml"></b:navLink>
+                        <b:navLink value="Créditos" icon-awesome="credit-cart" outcome="credito.xhtml"></b:navLink>
                          
                           
                             <h:form>
@@ -48,7 +50,6 @@
                     </b:listLinks>
                  
                 </b:column>
-        
                 <b:column col-sm="9" offset-sm="3" col-md="10" offset="2" styleClass="main">
                      
  

@@ -10,6 +10,7 @@ import com.entity.CodigoSesion;
 import com.entity.Comentario;
 import com.entity.Credito;
 import com.entity.Detallepreventa;
+import com.entity.Mora;
 import com.entity.Notificacion;
 import com.entity.Preventa;
 import com.entity.Producto;
@@ -20,6 +21,7 @@ import com.services.CodigoServices;
 import com.services.ComentarioServices;
 import com.services.CreditoServices;
 import com.services.DetallepreventaServices;
+import com.services.MoraServices;
 import com.services.NotificacionServices;
 import com.services.PreventaServices;
 import com.services.ProductoServices;
@@ -167,11 +169,27 @@ public class UsuarioBean {
             FacesMessages.error(obtenerCliente().getTienda().getNombretienda() + " No se encuentra disponible en estos momentos.");
         }
     }
+        public void listpreventas() throws IOException{
+        long id = notificacionserv.Obtenerultimoclien(obtenerCliente());
+        Notificacion n = notificacionserv.consultar(Notificacion.class,id);
+ 
+        
+        
+        if(n != null){
+          FacesMessages.info("Has recibido nuevos puntos de" + n.getTienda().getNombretienda());
+          notificacionserv.eliminar(n);
+        }
+       
+       
+    
+       
+    }
  
     
     
     public void confirmarpedido(){
-        
+        MoraServices ms = new MoraServices();
+        if(!(obtenerCliente().equals(ms.consultar(Mora.class, obtenerCliente().getId())))){
         Credito cre =null;
         Preventa c = new Preventa();
         Notificacion not = new Notificacion();
@@ -204,11 +222,11 @@ public class UsuarioBean {
                   
             }else if (getTipopreventa().equals("credito")) {
                    if(getValorcredito() >= getTotal()){
-                       setCreditocliente(creditoserv.vercredito(obtenerCliente()));
-                       double valorfinal = getValorcredito() - getTotal();
-                       getCreditocliente().setValor(valorfinal);
-                       creditoserv.modificar(getCreditocliente());
-                        setValorcredito(valorfinal);
+                    setCreditocliente(creditoserv.vercredito(obtenerCliente()));
+                    double valorfinal = getValorcredito() - getTotal();
+                    getCreditocliente().setValor(valorfinal);
+                    creditoserv.modificar(getCreditocliente());
+                    setValorcredito(valorfinal);
                     c.setCliente(obtenerCliente());
                     c.setTienda(obtenerCliente().getTienda());
                     c.setEstado((byte)0);
@@ -237,6 +255,7 @@ public class UsuarioBean {
 {
                 
             }
+        
                 try{
                       Thread.sleep(2000);
                   }catch(InterruptedException e){
@@ -246,6 +265,8 @@ public class UsuarioBean {
         } catch (Exception e) {
         }finally{
           
+        }}else{
+            FacesMessages.error("Posees una deuda en esta tienda.");
         }
   
       

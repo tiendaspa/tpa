@@ -17,9 +17,19 @@ import com.services.MoraServices;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Properties;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.swing.JOptionPane;
 import net.bootsfaces.utils.FacesMessages;
 
@@ -53,6 +63,49 @@ public class DebitoBean {
     
     public void listarcredito(){
         setListadebitos((ArrayList<Debito>) ds.vercreditos(Obtenertienda()));
+    }
+    public static void send(String to, String sub,String msg) 
+        
+     {
+         FacesMessage ms;
+         final String user="tiendaspa2015@hotmail.com";
+         final String pass="Proyectodeaula12345";
+        Properties props = new Properties();
+        //gmail: smtp.gmail.com
+        //hotmail
+        props.put("mail.smtp.host", "smtp.live.com");
+        props.put("mail.smtp.port", "587");	
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        
+        Session session = Session.getDefaultInstance(props,new Authenticator() 
+        {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() 
+            {
+                return new PasswordAuthentication(user, pass);
+            }
+        });
+
+        try 
+        {
+            Message message = new MimeMessage(session);
+            
+            message.setFrom(new InternetAddress(user));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+            message.setSubject(sub);
+            message.setText(msg);
+
+            Transport.send(message);
+            
+         FacesMessages.info("Mensaje enviado");
+        } catch (MessagingException e) 
+        {
+            FacesMessages.error("No se ha podido enviar Mensaje");
+            
+            throw new RuntimeException(e);
+        }
+        
     }
 
   
@@ -103,6 +156,16 @@ public class DebitoBean {
         setClientereportar(c);
         setDebito(de);
         
+    }
+    public void recordar(Cliente c, Debito de){
+        
+        try {
+                send(c.getCorreo(), "Recordatorio mora", "Recuerde pagar la mora del dia" + de.getFechacredito());
+        } catch (Exception e) {
+        }
+    
+        FacesMessages.info("Se ha enviado un recordatorio a " + c.getNombre());
+    
     }
     public void reportarcliente(){
        getMoracliente().setCliente(getClientereportar());

@@ -58,8 +58,9 @@ public class VentaBean {
     private boolean panelventa = false;
     private String tipo = null;
     private boolean tipoventa= false;
+    private boolean tipoventacredito= false;
     private Date fechacreditopagar;
-    
+    private boolean mostrarcredito =true;
     /**
      * Creates a new instance of VentaBean
      */
@@ -115,8 +116,16 @@ public class VentaBean {
         setMostrarbotonsiguiente(false);
         setMostrarbotonventa(true);
         setTipoventa(true);
+        setTipoventacredito(true);
     }
-    
+    public void omitircliente(){
+        setClienteventa(null);
+        setMostrarbotonsiguiente(false);
+        setMostrarbotonventa(true);
+        setTipoventacredito(false);
+        setTipoventa(true);
+        setMostrarcredito(false);
+    }
     
     public void añadiralcarrito(Long id){
         setProductoventa(productoserv.verproducto(id));
@@ -158,13 +167,13 @@ public class VentaBean {
     }
     }
     public void confirmarpedido(){
-      
+        setMostrarcredito(true);
         Venta c = new Venta();
         try {
             if(getTipo().equals("efectivo")){
-               c.setCliente(getClienteventa());
+                    c.setCliente(getClienteventa());
                     c.setTienda(Obtenertienda());
-                    
+                   
                     c.setTipo("Efectivo");
                     Date fecha = new Date();
                     c.setFecha(fecha);
@@ -178,6 +187,7 @@ public class VentaBean {
                     setTipoventa(false);
                     setTotal(0);
             FacesMessages.info("Venta realizada con exito");
+            listarproducto();
              setClienteventa(new Cliente());
             }else if(getTipo().equals("credito")){
                 c.setCliente(getClienteventa());
@@ -208,6 +218,7 @@ public class VentaBean {
                     setPanelventa(false);
                     setTipoventa(false);
                     setTotal(0);
+                    listarproducto();
             }
                  try{
                     Thread.sleep(2000);
@@ -215,8 +226,18 @@ public class VentaBean {
                 
                 }
         } catch (Exception e) {
+            FacesMessages.error("No se ha podido realizar venta.");
         }
     
+    }
+    public String stylecred(){
+         String estilo;
+        if(getClienteventa() == null){
+           estilo= "opacity: 0";
+        }else{
+           estilo= "opacity: 10";
+        }
+    return estilo;
     }
       
     public void generardetallepreventa(){
@@ -410,6 +431,30 @@ public class VentaBean {
 
     public void setFechacreditopagar(Date fechacreditopagar) {
         this.fechacreditopagar = fechacreditopagar;
+    }
+
+    public Debito getCrerdebito() {
+        return crerdebito;
+    }
+
+    public void setCrerdebito(Debito crerdebito) {
+        this.crerdebito = crerdebito;
+    }
+
+    public boolean isTipoventacredito() {
+        return tipoventacredito;
+    }
+
+    public void setTipoventacredito(boolean tipoventacredito) {
+        this.tipoventacredito = tipoventacredito;
+    }
+
+    public boolean isMostrarcredito() {
+        return mostrarcredito;
+    }
+
+    public void setMostrarcredito(boolean mostrarcredito) {
+        this.mostrarcredito = mostrarcredito;
     }
 
 

@@ -25,7 +25,7 @@ public class ProveedorServices extends ImplDao<Proveedor, Long> implements IProv
       
 
     @Override
-    public List<Proveedor> listarproducto(Tienda c) {
+    public List<Proveedor> listarproveedor(Tienda c) {
         
         ArrayList<Proveedor> listar = new ArrayList<>();
         String consulta = null;

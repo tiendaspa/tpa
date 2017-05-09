@@ -2,10 +2,10 @@
 -- version 4.6.5.2
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 28-05-2017 a las 23:56:02
--- Versión del servidor: 10.1.21-MariaDB
--- Versión de PHP: 5.6.30
+-- Host: 127.0.0.1
+-- Generation Time: May 09, 2017 at 08:37 AM
+-- Server version: 10.1.21-MariaDB
+-- PHP Version: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,13 +17,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `tpasolution`
+-- Database: `tpasolution`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `cliente`
+-- Table structure for table `cliente`
 --
 
 CREATE TABLE `cliente` (
@@ -42,17 +42,16 @@ CREATE TABLE `cliente` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `cliente`
+-- Dumping data for table `cliente`
 --
 
 INSERT INTO `cliente` (`id`, `apellido`, `cedula`, `contrasena`, `correo`, `direccion`, `estado`, `img`, `nombre`, `telefono`, `usuario`, `tienda_idtienda`) VALUES
-(1, 'Batty Linero', '16547748', '12345', 'juanlinero@hotmail.com', 'Los laureles', b'0', '1.jpg', 'Juan Manuel', '67894983', 'juan', 1),
-(2, 'p', 'pp', NULL, 'ppp', 'ppp', b'0', NULL, 'p', 'ppp', NULL, 1);
+(1, 'Batty Linero', '178399', '12345', 'batty@hotmail.com', 'laureles', b'1', '1.jpg', 'Juan Manuel', '300256722', 'batty', 1);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `codigosesion`
+-- Table structure for table `codigosesion`
 --
 
 CREATE TABLE `codigosesion` (
@@ -64,7 +63,7 @@ CREATE TABLE `codigosesion` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `comentario`
+-- Table structure for table `comentario`
 --
 
 CREATE TABLE `comentario` (
@@ -78,7 +77,7 @@ CREATE TABLE `comentario` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `credito`
+-- Table structure for table `credito`
 --
 
 CREATE TABLE `credito` (
@@ -88,10 +87,17 @@ CREATE TABLE `credito` (
   `tienda_idtienda` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `credito`
+--
+
+INSERT INTO `credito` (`id`, `valor`, `cliente_id`, `tienda_idtienda`) VALUES
+(1, 14000, 1, 1);
+
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `debito`
+-- Table structure for table `debito`
 --
 
 CREATE TABLE `debito` (
@@ -105,20 +111,10 @@ CREATE TABLE `debito` (
   `venta_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `debito`
---
-
-INSERT INTO `debito` (`id`, `estado`, `fechacredito`, `fechapago`, `total`, `cliente_id`, `tienda_idtienda`, `venta_id`) VALUES
-(1, 'Pendiente', '2017-05-06 13:14:58', '2017-05-31', 3000, 1, 1, 1),
-(2, 'Pendiente', '2017-05-06 13:35:08', '2017-05-30', 1500, 2, 1, 2),
-(3, 'Reportado', '2017-05-06 14:38:26', '2017-05-25', 3000, 1, 1, 3),
-(4, 'Reportado', '2017-05-06 14:39:08', '2017-05-06', 1500, 1, 1, 4);
-
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `detallepreventa`
+-- Table structure for table `detallepreventa`
 --
 
 CREATE TABLE `detallepreventa` (
@@ -131,10 +127,19 @@ CREATE TABLE `detallepreventa` (
   `tienda_idtienda` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `detallepreventa`
+--
+
+INSERT INTO `detallepreventa` (`id`, `cantidad`, `subtotal`, `cliente_id`, `preventa_id`, `producto_id`, `tienda_idtienda`) VALUES
+(1, 1, 2500, 1, 1, 3, 1),
+(2, 1, 1500, 1, 1, 15, 1),
+(3, 3, 9600, 1, 1, 14, 1);
+
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `detalleventa`
+-- Table structure for table `detalleventa`
 --
 
 CREATE TABLE `detalleventa` (
@@ -147,20 +152,10 @@ CREATE TABLE `detalleventa` (
   `venta_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `detalleventa`
---
-
-INSERT INTO `detalleventa` (`id`, `cantidad`, `subtotal`, `cliente_id`, `producto_id`, `tienda_idtienda`, `venta_id`) VALUES
-(1, 2, 3000, 1, 1, 1, 1),
-(2, 1, 1500, 2, 1, 1, 2),
-(3, 2, 3000, 1, 1, 1, 3),
-(4, 1, 1500, 1, 1, 1, 4);
-
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `ingresos`
+-- Table structure for table `ingresos`
 --
 
 CREATE TABLE `ingresos` (
@@ -170,10 +165,17 @@ CREATE TABLE `ingresos` (
   `tienda_idtienda` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `ingresos`
+--
+
+INSERT INTO `ingresos` (`id`, `total`, `cliente_id`, `tienda_idtienda`) VALUES
+(1, 13600, 1, 1);
+
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `mora`
+-- Table structure for table `mora`
 --
 
 CREATE TABLE `mora` (
@@ -184,18 +186,10 @@ CREATE TABLE `mora` (
   `tienda_idtienda` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `mora`
---
-
-INSERT INTO `mora` (`id`, `descripción`, `total`, `cliente_id`, `tienda_idtienda`) VALUES
-(1, 'Inserio linero', 1500, 1, 1),
-(2, 'Mas moroso nojoda', 3000, 1, 1);
-
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `noticia`
+-- Table structure for table `noticia`
 --
 
 CREATE TABLE `noticia` (
@@ -209,16 +203,17 @@ CREATE TABLE `noticia` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `noticia`
+-- Dumping data for table `noticia`
 --
 
 INSERT INTO `noticia` (`id`, `descripcion`, `fecha`, `titulo`, `cliente_id`, `producto_id`, `tienda_idtienda`) VALUES
-(1, 'llego la prestorbarba, mas afilada, ven por ella...', '2017-05-06 14:27:02', 'Nuevo producto! La cumbre paisa!', NULL, 1, 1);
+(1, 'muy buen cliente', '2017-05-09 01:30:43', 'Lo más fiel de La cumbre paisa!', 1, NULL, 1),
+(2, 'este es nuestro nuevo producto', '2017-05-09 01:31:13', 'Nuevo producto! La cumbre paisa!', NULL, 17, 1);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `notificacion`
+-- Table structure for table `notificacion`
 --
 
 CREATE TABLE `notificacion` (
@@ -230,7 +225,7 @@ CREATE TABLE `notificacion` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `preventa`
+-- Table structure for table `preventa`
 --
 
 CREATE TABLE `preventa` (
@@ -243,10 +238,17 @@ CREATE TABLE `preventa` (
   `tienda_idtienda` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `preventa`
+--
+
+INSERT INTO `preventa` (`id`, `estado`, `fecha`, `tipo`, `total`, `cliente_id`, `tienda_idtienda`) VALUES
+(1, 1, '2017-05-09 01:29:50', 'efectivo', 13600, 1, 1);
+
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `producto`
+-- Table structure for table `producto`
 --
 
 CREATE TABLE `producto` (
@@ -257,20 +259,70 @@ CREATE TABLE `producto` (
   `img` varchar(255) DEFAULT NULL,
   `nombreproducto` varchar(255) DEFAULT NULL,
   `precio` double DEFAULT NULL,
+  `proveedor_id` bigint(20) DEFAULT NULL,
   `tienda_idtienda` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `producto`
+-- Dumping data for table `producto`
 --
 
-INSERT INTO `producto` (`id`, `cantidad`, `categoria`, `descripcion`, `img`, `nombreproducto`, `precio`, `tienda_idtienda`) VALUES
-(1, 72, 'Aseo', 'Gillete azul', '1/103.jpg', 'Prestobarba ', 1500, 1);
+INSERT INTO `producto` (`id`, `cantidad`, `categoria`, `descripcion`, `img`, `nombreproducto`, `precio`, `proveedor_id`, `tienda_idtienda`) VALUES
+(1, 800, 'Aseo', 'Mas afilada, doble hoja', '1/103.jpg', 'Prestobarba ', 2000, 10, 1),
+(2, 800, 'Pan', 'Pan tajado bimbo', '1/93.jpg', 'Pan', 4200, 5, 1),
+(3, 889, 'Bebida', 'cocacola 600ml', '1/95.jpg', 'Cocacola ', 2500, 1, 1),
+(4, 80, 'Aseo', 'jabon supremo', '1/100.jpg', 'Jabon', 1200, 8, 1),
+(5, 890, 'Granos', 'Arroz diana 1kl', '1/104.jpg', 'Arroz', 2000, 3, 1),
+(6, 670, 'Granos', 'sal refisal', '1/105.jpg', 'Sal', 1500, 3, 1),
+(7, 90, 'Mecato', 'de todito bbq', '1/106.jpg', 'De todito', 2500, 7, 1),
+(8, 79, 'Aseo', 'ariel grande', '1/107.jpg', 'Ariel', 3000, 8, 1),
+(9, 120, 'Bebida', 'Hit de mango', '1/108.jpg', 'Hit', 1500, 1, 1),
+(10, 230, 'Mecato', 'Papitas margarita sabor a pollo', '1/109.jpg', 'Papitas', 1500, 7, 1),
+(11, 90, 'Pan', 'Ponque de vainilla', '1/110.jpg', 'ponqué', 2850, 5, 1),
+(12, 89, 'Bebida', 'leche alqueria ', '1/111.jpg', 'leche ', 3500, 4, 1),
+(13, 100, 'Bebida', 'aguila en botella', '1/114.jpg', 'Aguila Light', 3500, 1, 1),
+(14, 86, 'Bebida', 'postobon litron', '1/118.jpg', 'Postobon', 3200, 6, 1),
+(15, 77, 'Bebida', 'yogurt alpina', '1/123.jpg', 'Yogurt', 1500, 4, 1),
+(16, 78, 'Salsa', 'mayonesa fruco', '1/126.jpg', 'Mayonesa', 2000, 3, 1),
+(17, 67, 'Bebida', 'aguila en lata', '1/130.jpg', 'Aguila Light', 4000, 1, 1);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `respuestanoticia`
+-- Table structure for table `proveedor`
+--
+
+CREATE TABLE `proveedor` (
+  `id` bigint(20) NOT NULL,
+  `Apellido` varchar(255) DEFAULT NULL,
+  `correo` varchar(255) DEFAULT NULL,
+  `empresa` varchar(255) DEFAULT NULL,
+  `img` varchar(255) DEFAULT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+  `telefono` varchar(255) DEFAULT NULL,
+  `tienda_idtienda` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `proveedor`
+--
+
+INSERT INTO `proveedor` (`id`, `Apellido`, `correo`, `empresa`, `img`, `nombre`, `telefono`, `tienda_idtienda`) VALUES
+(1, 'Vergara', 'Alirio@hotmail.com', 'Cocacola', '1/cocacola.jpg', 'Alirio', NULL, 1),
+(2, 'Machado', 'julio@hotmail.com', 'Pepsi', '1/pepsi.jpg', 'Julio', NULL, 1),
+(3, 'Suarez', 'luci@hotmail.com', 'Fruco', '1/fruco.jpg', 'Luisa', NULL, 1),
+(4, 'Cortes', 'rodol@hotmail.com', 'Alpina', '1/alpina.jpg', 'Rodolfo', NULL, 1),
+(5, 'pertuz', 'juliopertu@hotmail.com', 'bimbo', '1/bimbo.jpg', 'julio', NULL, 1),
+(6, 'gutierrez', 'luici@hotmail.com', 'Postobon', '1/Postobon.jpg', 'luicio', NULL, 1),
+(7, 'perez', 'margaritas@hotmail.com', 'Margarita', '1/margaritachipslogo.jpg', 'margarita', NULL, 1),
+(8, 'Fasio', 'ari@hotmail.com', 'Ariel', '1/ariel.jpg', 'Ariel ', NULL, 1),
+(9, 'de avila', 'zenu@hotmail.com', 'Zenu', '1/zenu.jpg', 'zenu andrea', NULL, 1),
+(10, 'muñoez', 'munoz@hotmail.com', 'Gillete', '1/gillete.jpg', 'gillete morales', NULL, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `respuestanoticia`
 --
 
 CREATE TABLE `respuestanoticia` (
@@ -282,7 +334,7 @@ CREATE TABLE `respuestanoticia` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `sesionescliente`
+-- Table structure for table `sesionescliente`
 --
 
 CREATE TABLE `sesionescliente` (
@@ -292,10 +344,17 @@ CREATE TABLE `sesionescliente` (
   `tienda_idtienda` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `sesionescliente`
+--
+
+INSERT INTO `sesionescliente` (`id`, `fecha`, `cliente_id`, `tienda_idtienda`) VALUES
+(5, '2017-05-09 01:35:05', 1, 1);
+
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `sesionestienda`
+-- Table structure for table `sesionestienda`
 --
 
 CREATE TABLE `sesionestienda` (
@@ -307,7 +366,7 @@ CREATE TABLE `sesionestienda` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tienda`
+-- Table structure for table `tienda`
 --
 
 CREATE TABLE `tienda` (
@@ -323,16 +382,16 @@ CREATE TABLE `tienda` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `tienda`
+-- Dumping data for table `tienda`
 --
 
 INSERT INTO `tienda` (`idtienda`, `cedulapropietario`, `contrasena`, `direccion`, `estado`, `nombretienda`, `propietario`, `telefono`, `usuario`) VALUES
-(1, '1143403269', 'sgjupLLztmk=', 'carrera 80 #14, cartagena', b'0', 'La cumbre paisa', 'Daniel Castillo Ardila', '6785988', 'cumbrepaisa');
+(1, '1143403269', 'sgjupLLztmk=', 'carrera 80 #14, cartagena', b'1', 'La cumbre paisa', 'Andrea Marin', '6785988', 'cumbrepaisa');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `ubicaciongps`
+-- Table structure for table `ubicaciongps`
 --
 
 CREATE TABLE `ubicaciongps` (
@@ -343,7 +402,7 @@ CREATE TABLE `ubicaciongps` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `ubicaciongps`
+-- Dumping data for table `ubicaciongps`
 --
 
 INSERT INTO `ubicaciongps` (`id`, `latitud`, `longuitud`, `tienda_idtienda`) VALUES
@@ -352,7 +411,7 @@ INSERT INTO `ubicaciongps` (`id`, `latitud`, `longuitud`, `tienda_idtienda`) VAL
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `vendedor`
+-- Table structure for table `vendedor`
 --
 
 CREATE TABLE `vendedor` (
@@ -369,7 +428,7 @@ CREATE TABLE `vendedor` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `venta`
+-- Table structure for table `venta`
 --
 
 CREATE TABLE `venta` (
@@ -382,35 +441,25 @@ CREATE TABLE `venta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `venta`
---
-
-INSERT INTO `venta` (`id`, `fecha`, `tipo`, `total`, `cliente_id`, `tienda_idtienda`) VALUES
-(1, '2017-05-06 13:14:58', 'Credito', 3000, 1, 1),
-(2, '2017-05-06 13:35:08', 'Credito', 1500, 2, 1),
-(3, '2017-05-06 14:38:26', 'Credito', 3000, 1, 1),
-(4, '2017-05-06 14:39:08', 'Credito', 1500, 1, 1);
-
---
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `cliente`
+-- Indexes for table `cliente`
 --
 ALTER TABLE `cliente`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK_8osyr6g0wuyhovfh52ub85h50` (`tienda_idtienda`);
 
 --
--- Indices de la tabla `codigosesion`
+-- Indexes for table `codigosesion`
 --
 ALTER TABLE `codigosesion`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK_jyu2n98smqpl1duuhnesqbol8` (`cliente_id`);
 
 --
--- Indices de la tabla `comentario`
+-- Indexes for table `comentario`
 --
 ALTER TABLE `comentario`
   ADD PRIMARY KEY (`id`),
@@ -418,7 +467,7 @@ ALTER TABLE `comentario`
   ADD KEY `FK_oqkycrm6r0bu7ut6mxvcccnr3` (`tienda_idtienda`);
 
 --
--- Indices de la tabla `credito`
+-- Indexes for table `credito`
 --
 ALTER TABLE `credito`
   ADD PRIMARY KEY (`id`),
@@ -426,7 +475,7 @@ ALTER TABLE `credito`
   ADD KEY `FK_53cyskmiot03ub67dqbn0gspy` (`tienda_idtienda`);
 
 --
--- Indices de la tabla `debito`
+-- Indexes for table `debito`
 --
 ALTER TABLE `debito`
   ADD PRIMARY KEY (`id`),
@@ -435,7 +484,7 @@ ALTER TABLE `debito`
   ADD KEY `FK_qwxpfd5146gwmd5057ejbf66o` (`venta_id`);
 
 --
--- Indices de la tabla `detallepreventa`
+-- Indexes for table `detallepreventa`
 --
 ALTER TABLE `detallepreventa`
   ADD PRIMARY KEY (`id`),
@@ -445,7 +494,7 @@ ALTER TABLE `detallepreventa`
   ADD KEY `FK_f032ek9dvd464em08y0joasbk` (`tienda_idtienda`);
 
 --
--- Indices de la tabla `detalleventa`
+-- Indexes for table `detalleventa`
 --
 ALTER TABLE `detalleventa`
   ADD PRIMARY KEY (`id`),
@@ -455,7 +504,7 @@ ALTER TABLE `detalleventa`
   ADD KEY `FK_i440v0jiv8hp0yakoj0t1axel` (`venta_id`);
 
 --
--- Indices de la tabla `ingresos`
+-- Indexes for table `ingresos`
 --
 ALTER TABLE `ingresos`
   ADD PRIMARY KEY (`id`),
@@ -463,7 +512,7 @@ ALTER TABLE `ingresos`
   ADD KEY `FK_6lo6fbltrem07w30vo0ah0txg` (`tienda_idtienda`);
 
 --
--- Indices de la tabla `mora`
+-- Indexes for table `mora`
 --
 ALTER TABLE `mora`
   ADD PRIMARY KEY (`id`),
@@ -471,7 +520,7 @@ ALTER TABLE `mora`
   ADD KEY `FK_195uunujtlwkf114ev6dxl6bk` (`tienda_idtienda`);
 
 --
--- Indices de la tabla `noticia`
+-- Indexes for table `noticia`
 --
 ALTER TABLE `noticia`
   ADD PRIMARY KEY (`id`),
@@ -480,7 +529,7 @@ ALTER TABLE `noticia`
   ADD KEY `FK_s6iyqanyb3gwdqfhmttlhyphl` (`tienda_idtienda`);
 
 --
--- Indices de la tabla `notificacion`
+-- Indexes for table `notificacion`
 --
 ALTER TABLE `notificacion`
   ADD PRIMARY KEY (`id`),
@@ -488,7 +537,7 @@ ALTER TABLE `notificacion`
   ADD KEY `FK_swf69aespu6rhwv1p9wjn3e3` (`tienda_idtienda`);
 
 --
--- Indices de la tabla `preventa`
+-- Indexes for table `preventa`
 --
 ALTER TABLE `preventa`
   ADD PRIMARY KEY (`id`),
@@ -496,21 +545,29 @@ ALTER TABLE `preventa`
   ADD KEY `FK_34gtbouecug1von2eml295wcx` (`tienda_idtienda`);
 
 --
--- Indices de la tabla `producto`
+-- Indexes for table `producto`
 --
 ALTER TABLE `producto`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_q8873tj4tsaonjy7vk3oy0qsr` (`proveedor_id`),
   ADD KEY `FK_cigd36nictqiyrknhsi10xnw9` (`tienda_idtienda`);
 
 --
--- Indices de la tabla `respuestanoticia`
+-- Indexes for table `proveedor`
+--
+ALTER TABLE `proveedor`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_12rtqigu8rknitasvtl3qtrq` (`tienda_idtienda`);
+
+--
+-- Indexes for table `respuestanoticia`
 --
 ALTER TABLE `respuestanoticia`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK_psojp700tgyxyeii6dfugjvge` (`tienda_idtienda`);
 
 --
--- Indices de la tabla `sesionescliente`
+-- Indexes for table `sesionescliente`
 --
 ALTER TABLE `sesionescliente`
   ADD PRIMARY KEY (`id`),
@@ -518,34 +575,34 @@ ALTER TABLE `sesionescliente`
   ADD KEY `FK_mpordwwteqnyf31k9j5k9559b` (`tienda_idtienda`);
 
 --
--- Indices de la tabla `sesionestienda`
+-- Indexes for table `sesionestienda`
 --
 ALTER TABLE `sesionestienda`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK_nfvmffea6mly6j9ywinr662wr` (`tienda_idtienda`);
 
 --
--- Indices de la tabla `tienda`
+-- Indexes for table `tienda`
 --
 ALTER TABLE `tienda`
   ADD PRIMARY KEY (`idtienda`);
 
 --
--- Indices de la tabla `ubicaciongps`
+-- Indexes for table `ubicaciongps`
 --
 ALTER TABLE `ubicaciongps`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK_moeyelkpjgx7g8h5q6dqe6mm6` (`tienda_idtienda`);
 
 --
--- Indices de la tabla `vendedor`
+-- Indexes for table `vendedor`
 --
 ALTER TABLE `vendedor`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK_h9yvurt1dgs8fisedmkayfj0a` (`tienda_idtienda`);
 
 --
--- Indices de la tabla `venta`
+-- Indexes for table `venta`
 --
 ALTER TABLE `venta`
   ADD PRIMARY KEY (`id`),
@@ -553,141 +610,146 @@ ALTER TABLE `venta`
   ADD KEY `FK_higuv4nt8nmt3fsi83eelxax3` (`tienda_idtienda`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `cliente`
+-- AUTO_INCREMENT for table `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT de la tabla `codigosesion`
+-- AUTO_INCREMENT for table `codigosesion`
 --
 ALTER TABLE `codigosesion`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de la tabla `comentario`
+-- AUTO_INCREMENT for table `comentario`
 --
 ALTER TABLE `comentario`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de la tabla `credito`
+-- AUTO_INCREMENT for table `credito`
 --
 ALTER TABLE `credito`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT de la tabla `debito`
+-- AUTO_INCREMENT for table `debito`
 --
 ALTER TABLE `debito`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de la tabla `detallepreventa`
+-- AUTO_INCREMENT for table `detallepreventa`
 --
 ALTER TABLE `detallepreventa`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT de la tabla `detalleventa`
+-- AUTO_INCREMENT for table `detalleventa`
 --
 ALTER TABLE `detalleventa`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de la tabla `ingresos`
+-- AUTO_INCREMENT for table `ingresos`
 --
 ALTER TABLE `ingresos`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT de la tabla `mora`
+-- AUTO_INCREMENT for table `mora`
 --
 ALTER TABLE `mora`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de la tabla `noticia`
+-- AUTO_INCREMENT for table `noticia`
 --
 ALTER TABLE `noticia`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT de la tabla `notificacion`
+-- AUTO_INCREMENT for table `notificacion`
 --
 ALTER TABLE `notificacion`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT de la tabla `preventa`
+-- AUTO_INCREMENT for table `preventa`
 --
 ALTER TABLE `preventa`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT de la tabla `producto`
---
-ALTER TABLE `producto`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT de la tabla `respuestanoticia`
+-- AUTO_INCREMENT for table `producto`
+--
+ALTER TABLE `producto`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+--
+-- AUTO_INCREMENT for table `proveedor`
+--
+ALTER TABLE `proveedor`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT for table `respuestanoticia`
 --
 ALTER TABLE `respuestanoticia`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de la tabla `sesionescliente`
+-- AUTO_INCREMENT for table `sesionescliente`
 --
 ALTER TABLE `sesionescliente`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
--- AUTO_INCREMENT de la tabla `sesionestienda`
+-- AUTO_INCREMENT for table `sesionestienda`
 --
 ALTER TABLE `sesionestienda`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de la tabla `tienda`
+-- AUTO_INCREMENT for table `tienda`
 --
 ALTER TABLE `tienda`
   MODIFY `idtienda` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT de la tabla `ubicaciongps`
+-- AUTO_INCREMENT for table `ubicaciongps`
 --
 ALTER TABLE `ubicaciongps`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT de la tabla `vendedor`
+-- AUTO_INCREMENT for table `vendedor`
 --
 ALTER TABLE `vendedor`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de la tabla `venta`
+-- AUTO_INCREMENT for table `venta`
 --
 ALTER TABLE `venta`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 --
--- Restricciones para tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- Filtros para la tabla `cliente`
+-- Constraints for table `cliente`
 --
 ALTER TABLE `cliente`
   ADD CONSTRAINT `FK_8osyr6g0wuyhovfh52ub85h50` FOREIGN KEY (`tienda_idtienda`) REFERENCES `tienda` (`idtienda`);
 
 --
--- Filtros para la tabla `codigosesion`
+-- Constraints for table `codigosesion`
 --
 ALTER TABLE `codigosesion`
   ADD CONSTRAINT `FK_jyu2n98smqpl1duuhnesqbol8` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`);
 
 --
--- Filtros para la tabla `comentario`
+-- Constraints for table `comentario`
 --
 ALTER TABLE `comentario`
   ADD CONSTRAINT `FK_k0pmqt38giqm4p7cqgf12hwks` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`),
   ADD CONSTRAINT `FK_oqkycrm6r0bu7ut6mxvcccnr3` FOREIGN KEY (`tienda_idtienda`) REFERENCES `tienda` (`idtienda`);
 
 --
--- Filtros para la tabla `credito`
+-- Constraints for table `credito`
 --
 ALTER TABLE `credito`
   ADD CONSTRAINT `FK_53cyskmiot03ub67dqbn0gspy` FOREIGN KEY (`tienda_idtienda`) REFERENCES `tienda` (`idtienda`),
   ADD CONSTRAINT `FK_bt4fmnhjohmtw108ntvebj2x9` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`);
 
 --
--- Filtros para la tabla `debito`
+-- Constraints for table `debito`
 --
 ALTER TABLE `debito`
   ADD CONSTRAINT `FK_5lahss4n1rsu3e6c57ggnp5ve` FOREIGN KEY (`tienda_idtienda`) REFERENCES `tienda` (`idtienda`),
@@ -695,7 +757,7 @@ ALTER TABLE `debito`
   ADD CONSTRAINT `FK_qwxpfd5146gwmd5057ejbf66o` FOREIGN KEY (`venta_id`) REFERENCES `venta` (`id`);
 
 --
--- Filtros para la tabla `detallepreventa`
+-- Constraints for table `detallepreventa`
 --
 ALTER TABLE `detallepreventa`
   ADD CONSTRAINT `FK_2rmdrpfeeiiyaatdvh4ov2p42` FOREIGN KEY (`preventa_id`) REFERENCES `preventa` (`id`),
@@ -704,7 +766,7 @@ ALTER TABLE `detallepreventa`
   ADD CONSTRAINT `FK_f032ek9dvd464em08y0joasbk` FOREIGN KEY (`tienda_idtienda`) REFERENCES `tienda` (`idtienda`);
 
 --
--- Filtros para la tabla `detalleventa`
+-- Constraints for table `detalleventa`
 --
 ALTER TABLE `detalleventa`
   ADD CONSTRAINT `FK_8lbv77r5tw1vc03axpq4ly5rn` FOREIGN KEY (`producto_id`) REFERENCES `producto` (`id`),
@@ -713,21 +775,21 @@ ALTER TABLE `detalleventa`
   ADD CONSTRAINT `FK_t18ymg6uf4opo60vj0f551jdv` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`);
 
 --
--- Filtros para la tabla `ingresos`
+-- Constraints for table `ingresos`
 --
 ALTER TABLE `ingresos`
   ADD CONSTRAINT `FK_4y2cx5ddx22sc99ocmgc4k9k5` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`),
   ADD CONSTRAINT `FK_6lo6fbltrem07w30vo0ah0txg` FOREIGN KEY (`tienda_idtienda`) REFERENCES `tienda` (`idtienda`);
 
 --
--- Filtros para la tabla `mora`
+-- Constraints for table `mora`
 --
 ALTER TABLE `mora`
   ADD CONSTRAINT `FK_195uunujtlwkf114ev6dxl6bk` FOREIGN KEY (`tienda_idtienda`) REFERENCES `tienda` (`idtienda`),
   ADD CONSTRAINT `FK_f7ejt4xsypok810lqahn0198j` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`);
 
 --
--- Filtros para la tabla `noticia`
+-- Constraints for table `noticia`
 --
 ALTER TABLE `noticia`
   ADD CONSTRAINT `FK_cgbu8jg10o1ep0v5gb5j7u40w` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`),
@@ -735,58 +797,65 @@ ALTER TABLE `noticia`
   ADD CONSTRAINT `FK_s6iyqanyb3gwdqfhmttlhyphl` FOREIGN KEY (`tienda_idtienda`) REFERENCES `tienda` (`idtienda`);
 
 --
--- Filtros para la tabla `notificacion`
+-- Constraints for table `notificacion`
 --
 ALTER TABLE `notificacion`
   ADD CONSTRAINT `FK_5j101vkfl56dn2mjmsw48po0l` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`),
   ADD CONSTRAINT `FK_swf69aespu6rhwv1p9wjn3e3` FOREIGN KEY (`tienda_idtienda`) REFERENCES `tienda` (`idtienda`);
 
 --
--- Filtros para la tabla `preventa`
+-- Constraints for table `preventa`
 --
 ALTER TABLE `preventa`
   ADD CONSTRAINT `FK_34gtbouecug1von2eml295wcx` FOREIGN KEY (`tienda_idtienda`) REFERENCES `tienda` (`idtienda`),
   ADD CONSTRAINT `FK_jnb8ap8pkhhjecyiu3k0ihr3f` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`);
 
 --
--- Filtros para la tabla `producto`
+-- Constraints for table `producto`
 --
 ALTER TABLE `producto`
-  ADD CONSTRAINT `FK_cigd36nictqiyrknhsi10xnw9` FOREIGN KEY (`tienda_idtienda`) REFERENCES `tienda` (`idtienda`);
+  ADD CONSTRAINT `FK_cigd36nictqiyrknhsi10xnw9` FOREIGN KEY (`tienda_idtienda`) REFERENCES `tienda` (`idtienda`),
+  ADD CONSTRAINT `FK_q8873tj4tsaonjy7vk3oy0qsr` FOREIGN KEY (`proveedor_id`) REFERENCES `proveedor` (`id`);
 
 --
--- Filtros para la tabla `respuestanoticia`
+-- Constraints for table `proveedor`
+--
+ALTER TABLE `proveedor`
+  ADD CONSTRAINT `FK_12rtqigu8rknitasvtl3qtrq` FOREIGN KEY (`tienda_idtienda`) REFERENCES `tienda` (`idtienda`);
+
+--
+-- Constraints for table `respuestanoticia`
 --
 ALTER TABLE `respuestanoticia`
   ADD CONSTRAINT `FK_psojp700tgyxyeii6dfugjvge` FOREIGN KEY (`tienda_idtienda`) REFERENCES `tienda` (`idtienda`);
 
 --
--- Filtros para la tabla `sesionescliente`
+-- Constraints for table `sesionescliente`
 --
 ALTER TABLE `sesionescliente`
   ADD CONSTRAINT `FK_5ccege762at2hi0qv4cxbu2o1` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`),
   ADD CONSTRAINT `FK_mpordwwteqnyf31k9j5k9559b` FOREIGN KEY (`tienda_idtienda`) REFERENCES `tienda` (`idtienda`);
 
 --
--- Filtros para la tabla `sesionestienda`
+-- Constraints for table `sesionestienda`
 --
 ALTER TABLE `sesionestienda`
   ADD CONSTRAINT `FK_nfvmffea6mly6j9ywinr662wr` FOREIGN KEY (`tienda_idtienda`) REFERENCES `tienda` (`idtienda`);
 
 --
--- Filtros para la tabla `ubicaciongps`
+-- Constraints for table `ubicaciongps`
 --
 ALTER TABLE `ubicaciongps`
   ADD CONSTRAINT `FK_moeyelkpjgx7g8h5q6dqe6mm6` FOREIGN KEY (`tienda_idtienda`) REFERENCES `tienda` (`idtienda`);
 
 --
--- Filtros para la tabla `vendedor`
+-- Constraints for table `vendedor`
 --
 ALTER TABLE `vendedor`
   ADD CONSTRAINT `FK_h9yvurt1dgs8fisedmkayfj0a` FOREIGN KEY (`tienda_idtienda`) REFERENCES `tienda` (`idtienda`);
 
 --
--- Filtros para la tabla `venta`
+-- Constraints for table `venta`
 --
 ALTER TABLE `venta`
   ADD CONSTRAINT `FK_higuv4nt8nmt3fsi83eelxax3` FOREIGN KEY (`tienda_idtienda`) REFERENCES `tienda` (`idtienda`),

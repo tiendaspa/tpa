@@ -14,7 +14,7 @@
         
     </h:head>
     <h:body style="padding-top: 60px">
-        <h:outputScript library="holder" name="holder.js" />
+      <h:outputScript library="holder" name="holder.js" />
         <!--script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.5.2/holder.min.js"></script-->
         <b:navBar  brandHref="#" inverse="true" fixed="top" fluid="true">
             <b:image onclick="window.location.href='tpasolution.xhtml'"   tooltip="Hola, #{tiendaBean.hello}" tooltipPosition="right" class="probar" style="width: 15%;margin-left: -15px; height: 50px; cursor: pointer;" value="/resources/img/logo.png"></b:image>
@@ -22,27 +22,31 @@
                 <b:navLink  id="coment" value="Comentarios"  icon-awesome="comment" iconAlign="left" href="comentario.xhtml"> <b:badge id="notify" value="#{clienteBean.numero}"
                                                                                                                                                      tooltip="Tienes #{clienteBean.numero} mensajes por revisar" style="#{clienteBean.style()}" tooltip-position="left"
 />      </b:navLink>    
-                <b:navLink value="Pedidos" icon-awesome="shopping-cart"  href="pedidos.xhtml"> <b:badge style="background-color: red;" value="#{tiendaBean.listapre.size()}"></b:badge></b:navLink>
+                <b:navLink  id="bagdepedido" value="Pedidos" icon-awesome="shopping-cart"  href="pedidos.xhtml"> <b:badge  style="background-color: red;" value="#{tiendaBean.listapre.size()}"></b:badge></b:navLink>
                 
             </b:navbarLinks>
             <h:form styleClass="navbar-form navbar-right">
                 <div class="form-group">
-                    <b:inputText placeholder="Search..." fieldSize="sm"/>
+                    <b:inputText placeholder="Search..." typeahead="true" typeahead-values="#{clienteBean.listacliente}" fieldSize="sm"/>
                 </div>
             </h:form>
         </b:navBar>
         <b:container fluid="true">
-             <b:growl id="growlMsg" globalOnly="true" placementFrom="bottom"
-                    show-detail="true" show-summary="false" allowDismiss="true"
-                    delay="3000" escape="true" /> 
-           
+            <b:growl id="growlMsg" globalOnly="true" placementFrom="bottom" placementAlign="left"
+        show-detail="true" show-summary="false" allowDismiss="true"
+        escape="true"  icon="globe" delay="20000" style="background: transparent; " /> 
+            <h:form>
+                <p:poll async="true" interval="3" listener="#{tiendaBean.listpreventas()}" update=":growlMsg"></p:poll>
+            </h:form>
+        
              <b:row>
                 <b:column col-sm="3" col-md="2" styleClass="sidebar">
                     <b:listLinks>
                         <b:navLink  value="Clientes" iconAwesome="user" outcome="cliente.xhtml"></b:navLink>
                         <b:navLink value="Productos" iconAwesome="apple" outcome="productos_2.xhtml"></b:navLink>
-                            <b:navLink value="Ventas" icon-awesome="usd" outcome="venta.xhtml"></b:navLink>
-                            <b:navLink value="Proveedor" icon-awesome="shopping-cart" href="#"></b:navLink>
+                        <b:navLink value="Ventas" icon-awesome="usd" outcome="venta.xhtml"></b:navLink>
+                        <b:navLink value="Proveedor" icon-awesome="shopping-cart" outcome="proveedor.xhtml"></b:navLink>
+                        <b:navLink value="Créditos" icon-awesome="credit-cart" outcome="credito.xhtml"></b:navLink>
                          
                           
                             <h:form>
@@ -73,7 +77,7 @@
         <c:forEach items="#{ventaBean.listaproductos}" var="producto">
                     <h:form>
                         <b:column col-md="4">
-                                <b:panel style="border: none; "  title="#{producto.nombre}"  collapsible="false">
+                                <b:panel style="border: none; "  title="*#{producto.nombre}"  collapsible="false">
                         
                                     <b:image style="width: 100px; height: 100px;" value="/resources/img/img_tienda/#{producto.img}"></b:image>
 
@@ -93,14 +97,11 @@
                  </b:column>
     </b:container>
     <b:scrollSpy container="scrollable" target="scrollable" />
-    <b:column col-md="4">
-       
-    </b:column>
+    <hr/>
    
            
                 
-       <b:column col-md="6">
-        <div>
+      
            
             <b:panel id="carritopedido" rendered="#{ventaBean.panelventa}"  title="Carrito" style="border: none" collapsible="false">
         <h4>Cliente: #{ventaBean.clienteventa.nombre} #{ventaBean.clienteventa.apellido}</h4>
@@ -130,14 +131,16 @@
         <b:label severity="success" text="#{ventaBean.total}"></b:label><p></p>
                     <b:button rendered="#{ventaBean.mostrarbotonsiguiente}" id="siguiente" value="Siguiente" ></b:button>
                     <h:form>
-                        <div id="datefecha">
+                       
+                        
+                             <div id="datefecha">
                         <b:panel  title="credito">
                      
                          
                             <b:datepicker value="#{ventaBean.fechacreditopagar}"  ></b:datepicker>
                             </b:panel>
-                            </div>  
-                        <b:radiobutton rendered="#{ventaBean.tipoventa}" id="selectcredito" class="select" value="#{ventaBean.tipo}" itemLabel="Crédito" itemValue="credito" />
+                            </div>
+                        <b:radiobutton rendered="#{ventaBean.tipoventa}" id="selectcredito" class="select" value="#{ventaBean.tipo}" itemLabel="Crédito" itemValue="credito" style="#{ventaBean.stylecred()}"/>
                         <b:radiobutton rendered="#{ventaBean.tipoventa}" class="selectefectivo" value="#{ventaBean.tipo}" itemLabel="Efectivo" itemValue="efectivo" />
                         <b:commandButton rendered="#{ventaBean.mostrarbotonventa}" value="Confirmar venta" actionListener="#{ventaBean.confirmarpedido()}"></b:commandButton>
                     </h:form>
@@ -158,16 +161,19 @@
                              <b:dataTableColumn label="" >
                                  <b:commandButton value="Seleccionar" actionListener="#{ventaBean.seleccionarcliente(pro.id)}" ></b:commandButton>
                              </b:dataTableColumn>
-                           
+                                
                          </b:dataTable>
-                      
+                           
                         </h:form>
+                         <h:form>
+                 <b:commandButton value="Omitir" look="primary" action="#{ventaBean.omitircliente()}"></b:commandButton>
+            </h:form>
                     </b:panel>
+           
                     
                      
                   
-                </div>
-                    </b:column>
+              
        <b:scrollSpy container="scrollable" target="carritopedido" />
 
      

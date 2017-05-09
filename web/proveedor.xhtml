@@ -7,7 +7,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Dashboard Template for BootsFaces</title>
+        <title>Proveedor</title>
         <meta name="author" content="Riccardo Massera"></meta>
          <f:event type="preRenderView" listener="#{templateValidate.verificar()}"></f:event>
         <f:event type="preRenderView" listener="#{proveedorBean.listar()}"></f:event>
@@ -27,7 +27,7 @@
             </b:navbarLinks>
             <h:form styleClass="navbar-form navbar-right">
                 <div class="form-group">
-                    <b:inputText placeholder="Search..." fieldSize="sm"/>
+                    <b:inputText placeholder="Search..." typeahead="true" typeahead-values="#{clienteBean.listacliente}" fieldSize="sm"/>
                 </div>
             </h:form>
         </b:navBar>
@@ -35,15 +35,18 @@
             <b:growl id="growlMsg" globalOnly="true" placementFrom="bottom" placementAlign="left"
         show-detail="true" show-summary="false" allowDismiss="true"
         escape="true"  icon="globe" delay="20000" style="background: transparent; " /> 
-            
-       
+            <h:form>
+                <p:poll async="true" interval="3" listener="#{tiendaBean.listpreventas()}" update=":growlMsg"></p:poll>
+            </h:form>
+        
              <b:row>
                 <b:column col-sm="3" col-md="2" styleClass="sidebar">
                     <b:listLinks>
                         <b:navLink  value="Clientes" iconAwesome="user" outcome="cliente.xhtml"></b:navLink>
                         <b:navLink value="Productos" iconAwesome="apple" outcome="productos_2.xhtml"></b:navLink>
                         <b:navLink value="Ventas" icon-awesome="usd" outcome="venta.xhtml"></b:navLink>
-                        <b:navLink value="Proveedor" icon-awesome="shopping-cart" href="#"></b:navLink>
+                        <b:navLink value="Proveedor" icon-awesome="shopping-cart" outcome="proveedor.xhtml"></b:navLink>
+                        <b:navLink value="Créditos" icon-awesome="credit-cart" outcome="credito.xhtml"></b:navLink>
                          
                           
                             <h:form>
@@ -53,30 +56,8 @@
                  
                 </b:column>
                 <b:column col-sm="9" offset-sm="3" col-md="10" offset="2" styleClass="main">
-                    <h1>Dashboard</h1>
-                    <hr/>
-                    <b:row styleClass="placeholders">
-                        <b:column col-xs="6" col-sm="3" styleClass="placeholder">
-                            <img data-src="holder.js/200x200/sky" class="img-responsive" alt="Generic placeholder thumbnail"/>
-                            <h4>Label</h4>
-                            <span class="text-muted">Something else</span>
-                        </b:column>
-                        <b:column col-xs="6" col-sm="3" styleClass="placeholder">
-                            <img data-src="holder.js/200x200/vine" class="img-responsive" alt="Generic placeholder thumbnail"/>
-                            <h4>Label</h4>
-                            <span class="text-muted">Something else</span>
-                        </b:column>
-                        <b:column col-xs="6" col-sm="3" styleClass="placeholder">
-                            <img data-src="holder.js/200x200/sky" class="img-responsive" alt="Generic placeholder thumbnail"/>
-                            <h4>Label</h4>
-                            <span class="text-muted">Something else</span>
-                        </b:column>
-                        <b:column col-xs="6" col-sm="3" styleClass="placeholder">
-                            <img data-src="holder.js/200x200/vine" class="img-responsive" alt="Generic placeholder thumbnail"/>
-                            <h4>Label</h4>
-                            <span class="text-muted">Something else</span>
-                        </b:column>
-                    </b:row>
+                    <h1>Proveedores</h1>
+                  
                     <b:tabView>
                            <b:tab title="Ver proveedores">
                             <h:form>

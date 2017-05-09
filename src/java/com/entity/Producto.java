@@ -36,6 +36,9 @@ public class Producto implements Serializable {
     @ManyToOne
     private Tienda tienda;
     
+    @ManyToOne
+    private Proveedor proveedor;
+    
     public Long getId() {
         return id;
     }
@@ -131,6 +134,14 @@ public class Producto implements Serializable {
 
     public void setNombreproducto(String nombreproducto) {
         this.nombreproducto = nombreproducto;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
     }
 
 

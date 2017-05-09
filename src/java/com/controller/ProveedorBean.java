@@ -103,7 +103,7 @@ public class ProveedorBean {
         }
     }
     public void listar(){
-        setListaproveedor((ArrayList<Proveedor>) proveedorServices.listarproducto(Obtenertienda()));
+        setListaproveedor((ArrayList<Proveedor>) proveedorServices.listarproveedor(Obtenertienda()));
     }
     public void verproveedor(long id){
         setMostrartabla(false);

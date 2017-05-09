@@ -6,17 +6,21 @@
 package com.controller;
 
 import com.entity.Producto;
+import com.entity.Proveedor;
 import com.entity.Tienda;
 
 import com.services.ProductoServices;
+import com.services.ProveedorServices;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -40,18 +44,25 @@ public class ProductoBean {
     private Producto pro = new Producto();
     private Producto productomodificar = new Producto();
     ProductoServices ps  = new ProductoServices();
+    ProveedorServices provedorserv = new ProveedorServices();
     private ArrayList<Producto> listaproducto = new  ArrayList<>();
     private String pruebaimg;
     private String resource;
     private UploadedFile img;
     private boolean mostrardetalles = false;
     private boolean catalogo = true;
-    
+    private Proveedor proveedor = new Proveedor();
+    private List<Proveedor> listaproveedor= new ArrayList<>();
+    private long idprove;
     public ProductoBean() {
         listar();
+        listarproveedores();
+    }
+    public void listarproveedores(){
+        setListaproveedor(provedorserv.listarproveedor(Obtenertienda()));
     }
     
-            public void TransferFile (String fileName , InputStream in){
+    public void TransferFile (String fileName , InputStream in){
                 Rutaimg ruta = new Rutaimg();
         try{
             Tienda p = Obtenertienda();
@@ -62,7 +73,9 @@ public class ProductoBean {
                     getPro().setImg(p.getIdTienda()+"/"+a[0]+"."+extension);
                   
                     getPro().setTienda(Obtenertienda());
-                    
+                    setProveedor(provedorserv.consultar(Proveedor.class, getIdprove()));
+                    getPro().setProveedor(getProveedor());
+                    setIdprove(0);
                     //ps.crear(getPro());
                     //setPro(new Producto());
                     
@@ -103,7 +116,7 @@ public class ProductoBean {
                     
                     
                     TransferFile(getImg().getFileName(),getImg().getInputstream());
-                    
+                   
                     ps.crear(getPro());
                     setPro(new Producto());
                     listar();
@@ -229,6 +242,30 @@ public class ProductoBean {
 
     public void setCatalogo(boolean catalogo) {
         this.catalogo = catalogo;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    public List<Proveedor> getListaproveedor() {
+        return listaproveedor;
+    }
+
+    public void setListaproveedor(List<Proveedor> listaproveedor) {
+        this.listaproveedor = listaproveedor;
+    }
+
+    public long getIdprove() {
+        return idprove;
+    }
+
+    public void setIdprove(long idprove) {
+        this.idprove = idprove;
     }
 
 

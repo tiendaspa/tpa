@@ -32,7 +32,7 @@
             </b:navbarLinks>
             <h:form styleClass="navbar-form navbar-right">
                 <div class="form-group">
-                    <b:inputText placeholder="Search..." fieldSize="sm"/>
+                    <b:inputText placeholder="Search..." typeahead="true" typeahead-values="#{clienteBean.listacliente}" fieldSize="sm"/>
                 </div>
             </h:form>
         </b:navBar>
@@ -40,15 +40,18 @@
             <b:growl id="growlMsg" globalOnly="true" placementFrom="bottom" placementAlign="left"
         show-detail="true" show-summary="false" allowDismiss="true"
         escape="true"  icon="globe" delay="20000" style="background: transparent; " /> 
-             <h:form><p:poll   async="true"  interval="2" listener="#{tiendaBean.listpreventas()}" update=":growlMsg"></p:poll>
-          </h:form>
+            <h:form>
+                <p:poll async="true" interval="3" listener="#{tiendaBean.listpreventas()}" update=":growlMsg"></p:poll>
+            </h:form>
+        
              <b:row>
                 <b:column col-sm="3" col-md="2" styleClass="sidebar">
                     <b:listLinks>
                         <b:navLink  value="Clientes" iconAwesome="user" outcome="cliente.xhtml"></b:navLink>
                         <b:navLink value="Productos" iconAwesome="apple" outcome="productos_2.xhtml"></b:navLink>
                         <b:navLink value="Ventas" icon-awesome="usd" outcome="venta.xhtml"></b:navLink>
-                        <b:navLink value="Proveedor" icon-awesome="shopping-cart" href="#"></b:navLink>
+                        <b:navLink value="Proveedor" icon-awesome="shopping-cart" outcome="proveedor.xhtml"></b:navLink>
+                        <b:navLink value="Créditos" icon-awesome="credit-cart" outcome="credito.xhtml"></b:navLink>
                          
                           
                             <h:form>
@@ -58,16 +61,20 @@
                  
                 </b:column>
                 <b:column col-sm="9" offset-sm="3" col-md="10" offset="2" styleClass="main">
-                    <b:jumbotron class="jumbotronindex" rendered="#{tpaSolutionsBean.mostrarjumbo}">
+                    <div >
+                       
+                        <b:image rendered="#{tpaSolutionsBean.mostrarjumbo}" style="width: 100%;  " value="/resources/img/techo1.png"></b:image>
+                   
+                    </div>
+                    <b:jumbotron  style=" border-top: 0px;margin-top: -10px; border-color: #000000; width: 96%; margin-left: 30px; border-radius: 10px;"  class="jumbotronindex" rendered="#{tpaSolutionsBean.mostrarjumbo}">
             <b:container>
                
                 <b:column col-md="4">
-                     <h3>Hola, #{tiendaBean.hello} bienvenido!</h3>
+                    <h2>Hola,<b> #{tiendaBean.hello}</b> bienvenido!</h2>
                      Portal web que tomará el control con aquellos clientes que intenten robarte un credito, dile stop!<p></p>
                      <h:form id="frmabrir">
                          <b:commandButton look="primary" value="Ver mapa" icon="globe" actionListener="#{tpaSolutionsBean.mostrarmapa()}"/>
                      
-                         <b:switch  onText="Abrir" offText="Cerrar" onchange="ajax:tiendaBean.openstore()" update="@form" value="large-screen='full-width'" large-screen="full-width" />
                      </h:form><p></p> <b:button icon="certificate" look="danger" value="Promocionar producto" onclick="$('.mdlproducto').modal(); return false;" tooltip="Promociona tu producto y compite con tiendas!"></b:button>
                      
                      <b:modal  closable="false" id="mdlproduct" styleClass="mdlproducto" backdrop="false" close-on-escape="false">
@@ -104,8 +111,17 @@
                 
                 </b:column>
                 <b:column col-md="4">
-                   <b:image style="height: 250px; margin-left: 350px;" value="http://icon-icons.com/icons2/403/PNG/512/shop_40505.png"></b:image>
-                   <strong style="margin-left: 70px; float: right;">   Ingresos en linea : #{tiendaBean.ingresos}</strong>
+                    <h:form> 
+                        <b:switch  onText="Abrir" offText="Cerrar" onchange="ajax:tiendaBean.openstore()" update="conta" value="#{tpaSolutionsBean.open}" large-screen="full-width" /></h:form>
+                        <b:container id="conta">
+                         <b:image style="width: 40%;" rendered="#{tpaSolutionsBean.open}" value="http://1.bp.blogspot.com/-k1_hIVTJGtk/UtPB83pA_eI/AAAAAAAACHg/zUFDpnv99q8/s1600/cartel_abierto.png"></b:image>
+                         <b:image style="width: 40%;" rendered="#{tpaSolutionsBean.open eq false}" value="http://icon-icons.com/icons2/514/PNG/512/shop-closed_icon-icons.com_51015.png"></b:image>
+                        </b:container>
+                    <p> <strong style="margin-left: 70px; float: right;">   Ingresos en linea : #{tiendaBean.ingresos}</strong></p>
+                </b:column>
+                <b:column id="fot" col-md="4">
+                    <b:image style="width: 85%;" value="https://cdn2.iconfinder.com/data/icons/shopping-e-commerce-3/512/laptop-store-512.png"></b:image>
+                    
                 </b:column>
                 
                 
@@ -137,8 +153,14 @@
                  
         <b:container>
             <b:row>
-                <b:column col-md="4">
-                    <b:panel look="danger" title="Cliente" style="border:none">
+                <b:panel tooltip="Lo que pasa en #{tiendaBean.hello}">
+                     <f:facet name="heading">
+     <i class="fa fa-globe" style="padding-right:20px" />
+     <h:outputText value="Información en la web " />
+     <b:badge style="margin-left:10px; background-color:#5cb85c" value="#{tiendaBean.hello}"  />
+   </f:facet>
+                <b:column col-md="5">
+                    <b:panel  title="Cliente" style="border:none; width: 100%;">
                             <h3>Cliente más fiel en la web</h3>
                             <c:forEach items="#{tiendaBean.listaclientemascomprador}" var="top">
                         <h:form>
@@ -155,9 +177,9 @@
                                <p> <b:commandButton  iconAlign="right" iconAwesome="star" look="success" value="Premiar" actionListener="#{tiendaBean.verclientecredito(top.id)}"></b:commandButton><h:outputText value="&#160;" /> <b:button icon-awesome="edit" look="primary" value="Postear" onclick="$('.mdlnot').modal(); return false;"></b:button></p>
                            
                                <b:modal closable="false" styleClass="mdlnot" closeOnEscape="false" title="Redactar post." backdrop="false">
-                                   <b:column col-md="5">
+                           
                                        <b:inputTextarea placeholder="Describa el motivo del post...!" value="#{tiendaBean.noticiacliente.descripcion}"></b:inputTextarea>
-                                   </b:column>
+                                  
                                    <f:facet name="footer">
                                        <b:button value="Cancelar" dismiss="modal" onclick="return false;"></b:button>
                                        <b:commandButton value="Postear" icon="edit" actionListener="#{tiendaBean.publicarcliente(top.id)}" look="primary"></b:commandButton>
@@ -170,14 +192,14 @@
                       
                 </b:column>
                 <b:column col-md="7">
-                    <b:panel title="Productos" collapsible="false" style="border: none" look="warning">
+                    <b:panel   title="Productos" collapsible="false" style="border: none;" >
                         <p:lineChart  animate="true" legendRows="1" value="#{tiendaBean.productos}"  
             title="Productos más pedido en linea" style="height:300px; width: 100%;"
   	   yaxisLabel="Unidades vendidas"  />
                     </b:panel>
            
                 </b:column>
-            
+                </b:panel>
             </b:row>
             <hr/>
            

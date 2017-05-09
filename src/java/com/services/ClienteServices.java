@@ -30,9 +30,10 @@ public class ClienteServices extends ImplDao<Cliente, Long> implements ICliente,
         ArrayList<Cliente> listar = new ArrayList<>();
         String consulta = null;
         try {
-            consulta = "FROM Cliente c WHERE c.tienda =?1";
+            consulta = "FROM Cliente c WHERE c.tienda =?1 and c.estado =?2";
             Query query = getEmf().createEntityManager().createQuery(consulta);
             query.setParameter(1, c);
+            query.setParameter(2, true);
            
             listar =(ArrayList<Cliente>) query.getResultList();
             return listar;

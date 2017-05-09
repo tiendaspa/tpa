@@ -145,6 +145,13 @@ public class ClienteBean implements Serializable{
         setVercomentarios(false);
     }
     public void registrar(){
+        if(getClienteregistrar().getNombre().trim().equals("") || getClienteregistrar().getApellido().trim().equals("")   
+               || getClienteregistrar().getCedula().trim().equals("") || getClienteregistrar().getDireccion().trim().equals("") 
+               || getClienteregistrar().getCorreo().trim().equals("") ){
+         FacesMessages.error("Por favor rellene todos los campos");
+            setClienteregistrar(new Cliente());
+        }else{
+        
         MoraServices moraserv = new MoraServices();
         Boolean moroso = false;
         ArrayList<Mora> listamorosos = (ArrayList<Mora>) moraserv.consultarTodo(Mora.class);
@@ -160,20 +167,21 @@ public class ClienteBean implements Serializable{
         } catch (Exception e) {
         }
         getClienteregistrar().setTienda(Obtenertienda());
+        getClienteregistrar().setEstado(true);
         clienteserv.crear(getClienteregistrar());
         setClienteregistrado(true);
-    
+        FacesMessages.info("Registro exitoso!");
         listar();
         setClienteregistrar(new Cliente());
         }
         setClienteregistrar(new Cliente());
-     
+        }
     }
     public void ocultarpanel(){
         setClienteregistrado(false);
     }
     
-       public void notificarPUSH() {
+    public void notificarPUSH() {
 
         String summary = "Nuevo Elemento";
         String detail = "Se agrego a la lista";
@@ -244,8 +252,8 @@ public class ClienteBean implements Serializable{
         setCliente(new Cliente());
     }
     public void eliminar(){
-    
-        clienteserv.eliminar(getCliente());
+        getCliente().setEstado(false);
+        clienteserv.modificar(getCliente());
         setRow(false);
         setTabla(true);
         setListacliente((ArrayList<Cliente>) clienteserv.listarcliente(Obtenertienda()));
