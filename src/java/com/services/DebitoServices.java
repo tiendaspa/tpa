@@ -28,9 +28,10 @@ public class DebitoServices extends ImplDao<Debito, Long> implements IDebito, Se
        ArrayList<Debito> listar = new ArrayList<>();
         String consulta = null;
         try {
-            consulta = "FROM Debito c WHERE c.tienda =?1";
+            consulta = "FROM Debito c WHERE c.tienda =?1  and c.estado =?2";
             Query query = getEmf().createEntityManager().createQuery(consulta);
             query.setParameter(1, t);
+            query.setParameter(2, "Pendiente");
            
             listar =(ArrayList<Debito>) query.getResultList();
             return listar;

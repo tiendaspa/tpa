@@ -35,7 +35,7 @@
         </style>
         <f:event type="preRenderView" listener="#{tiendaBean.clienteestrella()}"></f:event>
     </h:head>
-    <h:body class="bod" style="padding-top: 60px; background-image: url('#{resource['/img/fondo.jpg']}'); background-size: cover">
+    <h:body class="bod" style="padding-top: 60px; background-image: url('#{resource['/img/fondos.jpg']}'); background-size: cover">
          <b:growl id="growlMsg" globalOnly="true" placementFrom="bottom"
         show-detail="true" show-summary="false" allowDismiss="true"
         delay="4000" escape="true" /> 
@@ -60,17 +60,11 @@
                 </b:inputText>
               
                 
-                <b:commandButton look="primary btn-block" value="Ingresar" iconAwesome="Log-in" id="btn-1" action="#{tiendaBean.iniciarSesion()}"></b:commandButton>
-                <b:commandButton type="button" look="info btn-block" value="Registrate" id="btn-2"></b:commandButton>
-                <b:commandButton type="button" style="color: red" id="btncliente" look="link" value="Poseo un codigo de cliente MODIFICACION"></b:commandButton>
+                <b:commandButton look="primary btn-block" value="Ingresar" icon="new-window" id="btn-1" action="#{tiendaBean.iniciarSesion()}"></b:commandButton>
+                <b:commandButton type="button" look="info btn-block" icon="list-alt" value="Registrate" id="btn-2"></b:commandButton>
+                <b:commandButton type="button" style="color: #1678c2;" id="btncliente" look="link" value="Poseo un codigo de cliente MODIFICACION"></b:commandButton>
             </h:form>
-                <b:button value="Ver consumidores" look="danger" onclick="$('.mdlmapa').modal(); return false;" ></b:button>
-                <b:modal  id="mdlmapa" styleClass="mdlmapa">
-                 <f:view contentType="text/html">
-        <h1>Google Map</h1>
-        <p:gmap center="41.381542, 2.122893" zoom="15" type="ROADMAP" style="width:600px;height:400px" />
-                </f:view>
-                </b:modal>
+               
                 <b:alert class="msgerror" closable="true"  style="width: 40%; margin: auto;" rendered="#{tiendaBean.mostraerror}" severity="danger"><strong>Usuario no encontrado!</strong> Por favor verifique sus datos.    </b:alert>
             </div>
             
@@ -179,20 +173,20 @@
                 $("#registro").hide();
                 $("#btn-2").click(function(){
                     $("#login").hide();
-                    $("#registro").fadeIn();
+                    $("#registro").show();
                 });
                 $("#btn-3").click(function(){
      
-                    $("#login").fadeIn();
+                    $("#login").show();
                     $("#registro").hide();
                 });
                 $("#btncliente").click(function(){
-                    $("#logincliente").fadeIn();
+                    $("#logincliente").show();
                     $("#login").hide();
                 });
                 $("#btn-6").click(function(){
                     $("#logincliente").hide();
-                    $("#login").fadeIn();
+                    $("#login").show();
                 });
                 $('.efecto').click(function(){
                    $('.estrella').animate({

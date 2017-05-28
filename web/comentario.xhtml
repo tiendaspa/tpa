@@ -78,22 +78,25 @@
         show-detail="true" show-summary="false" allowDismiss="true"
         delay="1000" escape="true" /> 
                 <h:form>
-                    <b:panel rendered="#{clienteBean.vercomentarios}" style="margin-left: 20px; margin-right: 20px; border: none;" look="success" title="Comentarios" collapsible="false">
-                    <p:dataList style="border: none; padding: 10px;" value="#{clienteBean.listacomentario}" var="car" type="definition">
-                        <f:facet name="header">
-                            <b:iconAwesome name="envelope">Mensajes</b:iconAwesome>
-                        </f:facet>
+                    <b:panel rendered="#{clienteBean.vercomentarios}" style="margin-left: 20px; margin-right: 20px; border: none;" look="primary" title="Comentarios" collapsible="false">
+                        <b:dataTable lang="es"  value="#{clienteBean.listacomentario}" var="car" >
+                            <b:dataTableColumn label="Imagen de perfil">
+                                <b:image style="width: 10%" value="/resources/img/img_cliente/#{car.cliente.img}"></b:image>
+                            </b:dataTableColumn>
+                            <b:dataTableColumn label="Nombre">
+                                  #{car.cliente.nombre} #{car.cliente.apellido}
+                            </b:dataTableColumn>
                      
-                        #{car.cliente.nombre} #{car.cliente.apellido}
-                    
+                   
+                            <b:dataTableColumn>
                             <b:commandButton actionListener="#{clienteBean.leerIDcomentario(car.id)}" size="sm" iconAwesome="envelope" look="success" value="Leer"></b:commandButton>
-                            <p:separator> </p:separator>
+                            </b:dataTableColumn>
                                 
                          
                         
-                    </p:dataList>
+                        </b:dataTable>
                         <p></p>
-                        <b:commandButton value="" look="success" iconAwesome="refresh" actionListener="#{clienteBean.refresh()}"></b:commandButton>
+                        <b:commandButton value="" look="primary" iconAwesome="refresh" actionListener="#{clienteBean.refresh()}"></b:commandButton>
                 </b:panel>
                     <b:panel rendered="#{clienteBean.vermensaje}" title="Comentario de #{clienteBean.comentario.cliente.nombre} #{clienteBean.comentario.cliente.apellido}">
                         <div style="width:400px; float: left; margin-left: 70px;" >

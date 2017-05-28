@@ -119,6 +119,7 @@ public class UsuarioBean {
         rCliente.getReporte(ruta, obtenerCliente().getId(), id);        
         FacesContext.getCurrentInstance().responseComplete();               
     }
+     
     public void añadiralcarrrito(Long id){
         if(obtenerCliente().getTienda().isEstado() == true){
         

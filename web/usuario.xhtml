@@ -132,24 +132,31 @@
                 <b:tab title="Catalogo en linea" id="catalogolinea">
                     <b:tabView>
                         <b:tab title="Catalogo" id="catalogo">
-                            
+                            <b:label large-screen="full-width" severity="primary" text="La tienda se encuenta cerrada" rendered="#{usuarioBean.cliente.tienda.estado == false eq true}"></b:label>
+                            <hr/>
                                 <c:forEach items="#{usuarioBean.listaproducto}" var="producto">
                                     <h:form>
-                                        <b:column col-md="2">
-                                       
-                                            <b:image style="width: 40%;height: 80px;border-radius: 60px;"  value="/resources/img/img_tienda/#{producto.img}"></b:image>
-                                            <p>#{producto.nombre}</p>
+                                        <b:column col-md="3">
+                                            <b:panel class="panelproducto" title="#{producto.nombre}" collapsible="false">
+                                             
+                                            <b:image style="width: 60%;height: 80px;border-radius: 60px;"  value="/resources/img/img_tienda/#{producto.img}"></b:image>
+                                     
                                             <p style="color: red">$#{producto.precio}</p>
                                             <p><input type="number" style="width: 20%; border-radius: 20px;border:0px; overflow: hidden;" jsf:value="#{usuarioBean.cantidad}" /></p>
                                             <b:label rendered="#{producto.cantidad == 0 eq true}" text="AGOTADO"></b:label><p></p>
                                             <b:label severity="primary" rendered="#{producto.cantidad == 0 eq false}"  text="Disponibles #{producto.cantidad}"></b:label><p></p>
-                                            <p><b:commandButton look="info"  rendered="#{producto.cantidad == 0 eq false}" value="añadir al carrito" disabled="#{producto.cantidad == 0 eq true}" iconAwesome="shopping-cart"    actionListener="#{usuarioBean.añadiralcarrrito(producto.id)}" /></p>
+                                            <p><b:commandButton  look="info"  rendered="#{producto.cantidad == 0 eq false}" value="añadir al carrito" disabled="#{producto.tienda.estado == false eq true}" iconAwesome="shopping-cart"    actionListener="#{usuarioBean.añadiralcarrrito(producto.id)}" /></p>
                                                    
-                                           
+                                            </b:panel>
                                         </b:column>
                                     </h:form>
                                 </c:forEach>
-                            
+                            <style>
+                                .panelproducto:hover{
+                                    
+                                    border-color: blue;
+                                }
+                            </style>
                         </b:tab>
                         <b:tab title="Ver recientes..">
                              

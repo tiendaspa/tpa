@@ -62,147 +62,72 @@
     }
     </style>
   
-    <b:navBar style="width: 50%; background-color: #767676;" id="nb" brand="Productos" brandHref="#">
-         <b:navbarLinks>
-             <b:navLink value="Pan" href="#Pan"></b:navLink>
-             <b:navLink value="Bebidas" href="#Bebidas"></b:navLink>
-            <b:navLink value="Grano" href="#Grano"></b:navLink>
-            <b:navLink value="Aseo" href="#Aseo"></b:navLink>
-         </b:navbarLinks>
-     </b:navBar>
- 
-    <b:container id="scrollable" styleClass="scroll">
-        <div id="Pan" class="container-fluid">
-            <h1>Panes</h1>
-          <div style="float: left; width: 50%;">
+
+  
+    <h3 style="color: #428bca">Catálogo</h3>
+  
+    <b:container style="width: 100%;" id="scrollable" styleClass="scroll">
+          <b:column col-md="67">
+              <b:panel title="Catálogo de productos" showCollapseLink="true">
                        
-              <c:forEach items="#{ventaBean.listaproductospan}" var="producto">
+        <c:forEach items="#{ventaBean.listaproductos}" var="producto">
                     <h:form>
-                            <div style="float: left; width: 70%; max-width: 100%; padding-left: 5px; height: 350px;">
-                                <b:panel style="border: none; "  title="#{producto.nombre}" look="info" collapsible="false">
+                        <b:column col-md="4">
+                                <b:panel style="border: none; "  title="#{producto.nombre}"  collapsible="false">
                         
                                     <b:image style="width: 100px; height: 100px;" value="/resources/img/img_tienda/#{producto.img}"></b:image>
 
                                     <p>$ #{producto.precio} Disponibles <h8 style="color: red">#{producto.cantidad}</h8></p>
                                      <p><input type="number" style="width: 20%; border-radius: 20px;border:0px; overflow: hidden;" jsf:value="#{ventaBean.cantidad}" /></p>
-                                    <p><b:commandButton class="car" style="width: 100%;" look="warning" value="Añadir al carrito" action="#{ventaBean.añadiralcarrito(producto.id)}"></b:commandButton> </p>
+                                     <p><b:commandButton icon="shopping-cart" class="car" style="width: 100%;" look="warning" value="Añadir al carrito" action="#{ventaBean.añadiralcarrito(producto.id)}"></b:commandButton> </p>
                           
                             
                                 </b:panel> 
-                            </div>
+                        </b:column>
                     </h:form>
                         
                     
                     </c:forEach>
-                </div>
-        </div>
-        <div id="Bebidas" class="container-fluid">
-            <h1>Bebidas</h1>
-          <div style="float: left; width: 50%;">
-                       
-              <c:forEach items="#{ventaBean.listaproductosbebida}" var="bebida">
-                    <h:form>
-                            <div style="float: left; width: 60%; max-width: 100%;   height: 250px;">
-                                <b:panel style="border: none; height: 250px;"  title="#{bebida.nombre}" look="info" collapsible="false">
-                        
-                                    <b:image style="width: 100px; height: 100px;" value="/resources/img/img_tienda/#{bebida.img}"></b:image>
-
-                                    <p>$ #{bebida.precio} Disponibles <h8 style="color: red">#{bebida.cantidad}</h8></p>
-                                     <p><input type="number" style="width: 20%; border-radius: 20px;border:0px; overflow: hidden;" jsf:value="#{ventaBean.cantidad}" /></p>
-                                    <p><b:commandButton class="car" style="width: 100%;" look="warning" value="Añadir al carrito" action="#{ventaBean.añadiralcarrito(bebida.id)}"></b:commandButton> </p>
-                          
-                            
-                                </b:panel> 
-                            </div><p></p>
-                    </h:form>
-                        
-                    
-                    </c:forEach>
-                </div>
-        </div>
-        <div id="Grano" class="container-fluid">
-            <h1>Granos</h1>
-          <div style="float: left; width: 50%;">
-                       
-              <c:forEach items="#{ventaBean.listaproductosgranos}" var="grano">
-                    <h:form>
-                            <div style="float: left; width: 70%; max-width: 100%; padding-left: 5px; height: 350px;">
-                                <b:panel style="border: none; "  title="#{grano.nombre}" look="info" collapsible="false">
-                        
-                                    <b:image style="width: 100px; height: 100px;" value="/resources/img/img_tienda/#{grano.img}"></b:image>
-
-                                    <p>$ #{grano.precio} Disponibles <h8 style="color: red">#{grano.cantidad}</h8></p>
-                                     <p><input type="number" style="width: 20%; border-radius: 20px;border:0px; overflow: hidden;" jsf:value="#{ventaBean.cantidad}" /></p>
-                                    <p><b:commandButton class="car" style="width: 100%;" look="warning" value="Añadir al carrito" action="#{ventaBean.añadiralcarrito(grano.id)}"></b:commandButton> </p>
-                          
-                            
-                                </b:panel> 
-                            </div><p></p>
-                    </h:form>
-                        
-                    
-                    </c:forEach>
-                </div>
-        </div>
-           <div id="Aseo" class="container-fluid">
-            <h1>Aseo</h1>
-          <div style="float: left; width: 50%;">
-                       
-              <c:forEach items="#{ventaBean.listaproductosaseo}" var="aseo">
-                    <h:form>
-                            <div style="float: left; width: 70%; max-width: 100%; padding-left: 5px; height: 350px;">
-                                <b:panel style="border: none; "  title="#{aseo.nombre}" look="info" collapsible="false">
-                        
-                                    <b:image style="width: 100px; height: 100px;" value="/resources/img/img_tienda/#{aseo.img}"></b:image>
-
-                                    <p>$ #{aseo.precio} Disponibles <h8 style="color: red">#{aseo.cantidad}</h8></p>
-                                    <p><input type="number" style="width: 20%; border-radius: 20px;border:0px; overflow: hidden;" jsf:value="#{ventaBean.cantidad}" /></p>
-                                    <p><b:commandButton class="car" style="width: 100%;" look="warning" value="Añadir al carrito" action="#{ventaBean.añadiralcarrito(aseo.id)}"></b:commandButton> </p>
-                          
-                            
-                                </b:panel> 
-                            </div><p></p>
-                    </h:form>
-                        
-                    
-                    </c:forEach>
-                </div>
-        </div>
-     
+           
+        </b:panel>
+                 </b:column>
     </b:container>
- 
-    <b:scrollSpy container="scrollable" target="nb" />
-
+    <b:scrollSpy container="scrollable" target="scrollable" />
+    <b:column col-md="4">
+       
+    </b:column>
+   
            
                 
-   
-        <div style="float: right; width: 47%; margin-top: -580px;">
-             <b:panel id="carritopedido" rendered="#{ventaBean.panelventa}"  title="Carrito" style="border: none" collapsible="false">
+       <b:column col-md="6">
+        <div>
+           
+            <b:panel id="carritopedido" rendered="#{ventaBean.panelventa}"  title="Carrito" style="border: none" collapsible="false">
         <h4>Cliente: #{ventaBean.clienteventa.nombre} #{ventaBean.clienteventa.apellido}</h4>
       
         
         
                     <ui:repeat id="carrito" value="#{ventaBean.listadetalleventa}" var="detalle">
-                   <h:form>
+                        <h:form>
                        
-                        <h:column>
-                            <b:image style="width: 10%; height: 100px;" value="/resources/img/img_tienda/#{detalle.producto.img}"></b:image>
-                            <b:label text="#{detalle.producto.nombre}"></b:label>
-                        </h:column>
-                        <h:column>
-                            #{detalle.cantidad}
-                            
-                            <p></p>  #{detalle.subtotal}
-                    
-                        </h:column>
-                        <h:column>
-                           
-                            <b:commandButton value="Eliminar del carro" actionListener="#{ventaBean.eliminar(detalle.producto.id)}"></b:commandButton>
-                          
-                        </h:column>
-                 </h:form>
+                            <h:column>
+                                <b:image style="width: 10%; height: 100px;" value="/resources/img/img_tienda/#{detalle.producto.img}"></b:image>
+                                <b:label text="#{detalle.producto.nombre}"></b:label>
+                            </h:column>
+                            <h:column>
+                                #{detalle.cantidad}
+
+                                <p></p>  #{detalle.subtotal}
+
+                            </h:column>
+                            <h:column>
+
+                                <b:commandButton look="danger" value="Eliminar del carro" actionListener="#{ventaBean.eliminar(detalle.producto.id)}"></b:commandButton>
+
+                            </h:column>
+                        </h:form>
                     </ui:repeat>
-        <b:label text="#{ventaBean.total}"></b:label><p></p>
+        <b:label severity="success" text="#{ventaBean.total}"></b:label><p></p>
                     <b:button rendered="#{ventaBean.mostrarbotonsiguiente}" id="siguiente" value="Siguiente" ></b:button>
                     <h:form>
                         <div id="datefecha">
@@ -218,25 +143,34 @@
                     </h:form>
                        </b:panel>
                     <b:panel id="datoscliente" title="Selecciona Cliente" >
-                        <c:forEach items="#{ventaBean.listaclientes}" var="cliente">
-                            <h:form>
-                            
-                            <h:column>
-                                #{cliente.nombre}  #{cliente.apellido}
-                            </h:column>
-                            <h:column>
-                                <b:commandButton value="Seleccionar" actionListener="#{ventaBean.seleccionarcliente(cliente.id)}"></b:commandButton>
-                            </h:column>
-                               
-                            </h:form>
-                        </c:forEach>
+                        <h:form>
+                        <b:dataTable  value="#{ventaBean.listaclientes}" var="pro" 
+                                       searching="true"
+                                        fixedHeader="true"
+             scroll-size="300px"
+             scroll-x="false"
+             responsive="true"
+             lang="es">
+                          
+                             <b:dataTableColumn value="#{pro.nombre}" label="Producto" >
+                                 
+                             </b:dataTableColumn>
+                             <b:dataTableColumn label="" >
+                                 <b:commandButton value="Seleccionar" actionListener="#{ventaBean.seleccionarcliente(pro.id)}" ></b:commandButton>
+                             </b:dataTableColumn>
+                           
+                         </b:dataTable>
                       
-                        
+                        </h:form>
                     </b:panel>
                     
                      
-                    
+                  
                 </div>
+                    </b:column>
+       <b:scrollSpy container="scrollable" target="carritopedido" />
+
+     
    
         <script>
             $(document).ready(function(){

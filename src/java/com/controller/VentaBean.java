@@ -16,6 +16,7 @@ import com.services.DebitoServices;
 import com.services.DetalleventaServices;
 import com.services.ProductoServices;
 import com.services.VentaServices;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -66,22 +67,25 @@ public class VentaBean {
         listarproducto();
         listarcliente();
     }
-    public void eliminar(Long id){
+    public void eliminar(Long id) throws IOException{
      
         for(int i=0; i< getListadetalleventa().size(); i++){
             if(getListadetalleventa().get(i).getProducto().getId().equals(id)){
                 total -= getListadetalleventa().get(i).getSubtotal();
                 getListadetalleventa().remove(i);
             }
-        }
-        if(getListadetalleventa().size() == 0){
+               if(getListadetalleventa().isEmpty()){
             setMostrarbotonsiguiente(false);
             setMostrarbotonventa(false);
             setTipoventa(false);
             setTotal(0);
             setPanelventa(false);
             setClienteventa(new Cliente());
+            getListadetalleventa().clear();
+            FacesContext.getCurrentInstance().getExternalContext().redirect("faces/venta.xhtml");
         }
+        }
+     
     
     }
     public void listarproducto(){

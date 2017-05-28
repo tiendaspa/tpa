@@ -112,6 +112,7 @@
             </b:container>
 
         </b:jumbotron>
+          
                   
                     <b:container rendered="#{tpaSolutionsBean.mostrarmapatiendas}" id="gmapcontainer">
                      
@@ -129,6 +130,7 @@
         </p:gmapInfoWindow>
     </p:gmap>
 </h:form>
+                        <hr />
                 </b:container>
                    
            
@@ -167,7 +169,7 @@
                     </b:panel>
                       
                 </b:column>
-                <b:column col-md="8">
+                <b:column col-md="7">
                     <b:panel title="Productos" collapsible="false" style="border: none" look="warning">
                         <p:lineChart  animate="true" legendRows="1" value="#{tiendaBean.productos}"  
             title="Productos más pedido en linea" style="height:300px; width: 100%;"
@@ -185,7 +187,7 @@
                         <h3 style="color: #0E566C">Noticias</h3>
                         <hr/>
                         <c:forEach items="#{tiendaBean.listadonoticias}" var="noticia">
-                            <b:column col-sm="6" col-md="4" styleClass="placeholder">
+                            <b:column  col-md="4" styleClass="placeholder">
                               
                                     
                                 <b:thumbnail style="height: 680px;">
@@ -199,7 +201,7 @@
                                                 
                                                 </p>
                                             </f:facet>
-                                        </b:thumbnail>
+                                </b:thumbnail>
                              
                           
                                <h5>Autor:</h5>

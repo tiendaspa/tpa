@@ -10,7 +10,7 @@
     <h:head>
         <title>Dashboard Template for BootsFaces</title>
         <meta name="author" content="Riccardo Massera"></meta>
-        
+        <f:event type="preRenderView" listener="#{debitoBean.listarcredito()}"></f:event>
     </h:head>
     <h:body style="padding-top: 60px">
        <h:outputScript library="holder" name="holder.js" />
@@ -33,7 +33,7 @@
              <b:growl id="growlMsg" globalOnly="true" placementFrom="bottom"
                     show-detail="true" show-summary="false" allowDismiss="true"
                     delay="3000" escape="true" /> 
-               <h:form>  <p:poll interval="1"  listener="#{tiendaBean.listpreventas()}" update=":growlMsg"  /> </h:form>
+             
             <b:row>
                 <b:column col-sm="3" col-md="2" styleClass="sidebar">
                     <b:listLinks>
@@ -56,8 +56,10 @@
                     <b:row styleClass="placeholders">
                         <b:carousel id="parque">
                             <c:forEach items="#{debitoBean.listadebitos}" var="deb">
+                               
                                 <b:carouselItem >
-                                    <b:column col-md="4" styleClass="placeholder">
+                                 
+                                    <b:column  col-md="4" styleClass="placeholder">
                                <h3>Detalle de compra</h3>
                                <p>Estado: #{deb.estado}</p>
                                <p>Fecha de la venta: #{deb.fechacredito}</p>
@@ -68,31 +70,68 @@
                                     <b:column col-md="4" styleClass="placeholder">
                                         <b:button style="margin-top: 130px;"  look="warning" value="ver más" iconAwesome="search"></b:button>
                                     </b:column>
+                                   
                             </b:carouselItem>
+                   
                             </c:forEach>
                          </b:carousel>
                      
                         
                     </b:row>
-                    <h3>Listado de debítos pendientes</h3>
-                    <hr/>
+                  
                     <b:row styleClass="table-responsive">
                         <b:container rendered="#{debitoBean.mostrarcreditos}">
-                            <c:forEach items="#{debitoBean.listadebitos}" var="debito">
-                                <h:form>
-                                    <b:column col-md="4">
-                                        se busca
-                                        <b:thumbnail>
-
-                                            <b:image style="height:150px; border-radius: 160px; width: 40%;" value="/resources/img/img_cliente/#{debito.cliente.img}"></b:image>
-                                        </b:thumbnail>
-                                        <p>
-                                            <b:commandButton look="warning" value="Ver detalles" actionListener="#{debitoBean.verventa(debito.venta, debito.venta.id, debito.venta.fecha,debito.total)}"></b:commandButton>
-                                        </p>
-                                    </b:column>
-                                </h:form>
-
-                            </c:forEach>
+                              <h3>Listado de debítos pendientes</h3>
+                    <hr/>
+                              <h:form>
+                            <b:dataTable value="#{debitoBean.listadebitos}" var="debito" lang="es" responsive="true" >
+                             
+                                    <b:dataTableColumn value="">
+                                        <b:image style="width: 10%;" value="/resources/img/img_cliente/#{debito.cliente.img}"></b:image>
+                                    </b:dataTableColumn>
+                                <b:dataTableColumn label="Fecha de pago" value="#{debito.fechapago}">
+                                    </b:dataTableColumn>
+                                <b:dataTableColumn value="#{debito.cliente.nombre}"></b:dataTableColumn>
+                                    
+                                <b:dataTableColumn label="más info..." labelStyle="color: red;">
+                                            <b:commandButton look="warning" value="Ver detalles" actionListener="#{debitoBean.ver(debito.venta, debito.venta.id, debito.venta.fecha,debito.total,debito)}"></b:commandButton>
+                                    </b:dataTableColumn>
+                                <b:dataTableColumn>
+                         
+                                    <b:commandButton rendered="#{debito.fechapago.compareTo(debitoBean.fecha)>0  eq false}" value="Reportar" look="danger" actionListener="#{debitoBean.reportar(debito.cliente,debito)}"></b:commandButton>
+                                   
+                                </b:dataTableColumn>
+                                
+                                
+                            </b:dataTable>
+                            </h:form>
+                  
+                        </b:container>
+                        <b:container id="panelmora" rendered="#{debitoBean.panelmora}">
+                            <h:form>
+                            <b:column col-md="6"> 
+                               <b:thumbnail>
+                                   <b:image style="height: 400px;" rendered="#{debitoBean.clientereportar.img != null}" value="/resources/img/img_cliente/#{debitoBean.clientereportar.img}" alt="Generic placeholder thumbnail"/>
+            <f:facet name="caption">
+                <h3>#{debitoBean.clientereportar.nombre} </h3>
+                <p><strong>Dirección: </strong>#{debitoBean.clientereportar.direccion}</p>
+                <p><strong>Telefono: </strong>#{debitoBean.clientereportar.telefono}</p>
+                <p>
+                    <b:inputTextarea value="#{debitoBean.moracliente.descripción}" placeholder="describa los motivos" ></b:inputTextarea>
+                    <b:commandButton value="reportar" look="primary" actionListener="#{debitoBean.reportarcliente()}"></b:commandButton>
+                 
+                </p>
+            </f:facet>
+        </b:thumbnail>
+                           
+                                
+                          
+                            </b:column>
+                            <b:column col-md="4">
+                                <b:image value="http://wildaboutfinance.com/wp-content/uploads/2015/05/man_debts.png"></b:image>
+                            </b:column>
+                            
+                            </h:form>
                         </b:container>
                         <b:container  rendered="#{debitoBean.mostrardetalles}">
                           
@@ -102,9 +141,9 @@
                                     <hr/>
                                     <h2>Datos venta:</h2>
                                     <p>Fecha: #{debitoBean.ventadatos.fecha}</p>
-                                    <p>Fecha limite:  #{debitoBean.fechalimite}</p>
+                                    <p>Fecha limite:  #{debitoBean.debito.fechapago}</p>
                                   
-                            <b:column col-md="6" >
+                            <b:column col-md="8" >
                                
 
                                 <c:forEach items="#{debitoBean.listadetalleventa}" var="detalle">
@@ -123,24 +162,26 @@
                                    
                             </b:column>
                                     
-                                        <b:column col-md="6">
-                                         <b:image style="float: right;" value="http://www.shopnsouq.com/image/catalog/direct%20payment.png"></b:image>
+                                        <b:column col-md="2">
+                                         <b:image style="float: right;" value="http://icons.iconarchive.com/icons/rockettheme/ecommerce/256/basket-icon.png"></b:image>
                                         </b:column>
                                   
-                                    <h:form>
-                                        <b:commandButton look="link" value="regresar" actionListener="#{debitoBean.ocultardetalles()}"></b:commandButton>
-                                    </h:form>
+                                    
                      
                             </div>
+                            <h:form>
+                                        <b:commandButton look="link" value="regresar" actionListener="#{debitoBean.ocultardetalles()}"></b:commandButton>
+                                    </h:form>
+                            <h:form>
                               <b:panel class="panelabonar" title="Abonar" look="warning" collapsible="false">
                                   <b:column col-md="8">
                                       <h4>Total de la mora: <h4 style="color: red"><strong>#{debitoBean.totaldeuda}</strong></h4></h4>
-                                      <b:inputText placeholder="digite valor abono"> <f:facet name="prepend" >
+                                      <b:inputText value="#{debitoBean.valorabono}" placeholder="digite valor abono"> <f:facet name="prepend" >
                               <b:iconAwesome name="usd"></b:iconAwesome>
                               
                               
                                           </f:facet></b:inputText><p></p>
-                                          <b:button look="success" icon="piggy-bank" value="Abobar"></b:button>
+                                          <b:commandButton look="success" icon="piggy-bank" value="Abobar" actionListener="#{debitoBean.abonar()}" />
                                   </b:column>
                                   <b:column col-md="4">
                                       <b:image style="height: 300px;" value="http://icon-icons.com/icons2/550/PNG/512/business-color_payment_icon-icons.com_53442.png"></b:image>
@@ -149,6 +190,7 @@
                                       <b:label text="#{tiendaBean.hello}"></b:label>
     </f:facet>
                                     </b:panel>
+                            </h:form>
                         
                         </b:container>
                         
@@ -156,6 +198,10 @@
 
                     </b:row>
                 </b:column>
+                <script>
+  $.blockUI.defaults.overlayCSS.opacity=0;
+  $.blockUI.defaults.message='<h1><img src="javax.faces.resource/images/waitcursor.gif.jsf?ln=bsf" /></h1>';
+</script>  
                 <script>
                     $(document).ready(function(){
                      
